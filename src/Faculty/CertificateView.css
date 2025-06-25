@@ -1,0 +1,76 @@
+/* CertificateView.css */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #e0f7fa;
+  height: 100%;
+  width: 100%;
+}
+
+.certificate-wrapper {
+  text-align: center;
+  padding: 40px;
+  background-color: #e0f7fa;
+  min-height: 100vh;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.heading {
+  font-size: 32px;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.certificate-image {
+  width: 90%;
+  max-width: 900px;
+  border: 3px solid #aaa;
+  border-radius: 12px;
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+}
+
+.action-buttons {
+  margin-top: 30px;
+}
+
+.approve-btn,
+.deny-btn {
+  padding: 12px 24px;
+  font-size: 18px;
+  margin: 0 15px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.approve-btn {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.deny-btn {
+  background-color: #f44336;
+  color: white;
+}
+
+.back-btn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
