@@ -15,6 +15,8 @@ export default function Signup() {
   const [otpin, setotpin] = useState(false);
   const [otp, setotp] = useState('');
   const [otpErr, setotpErr] = useState('');
+  const [userType, setUserType] = useState('');
+
 
   
   const handleEmailChange = (value) => {
@@ -69,7 +71,7 @@ export default function Signup() {
       alert("Please submit all fields properly");
     } else {
       alert("Registered successfully!");
-      navigate('/Login')
+      navigate('/Login',{ state: { role: userType } })
     }
   };
 
@@ -88,6 +90,26 @@ export default function Signup() {
       <center>
         <form className="signup-form">
           <div className="form-group">
+            <label>
+              <input
+                type="radio"
+                name="userType"
+                value="student"
+                checked={userType === 'student'}
+                onChange={(e) => setUserType(e.target.value)}
+              />
+              Student
+            </label>{'            '} 
+              <label>
+                <input
+                  type="radio"
+                  name="userType"
+                  value="faculty"
+                  checked={userType === 'faculty'}
+                  onChange={(e) => setUserType(e.target.value)}
+                />
+                Faculty
+              </label><br />{' '} <br />
             <b>Enter Mail Id  : </b>
             <input
               type="text"
@@ -96,7 +118,9 @@ export default function Signup() {
               onChange={(e) => handleEmailChange(e.target.value)}
             />{' '}
             <span className="error-text">{mailErr}</span><br />
+            {mailErr==="" && !gmail==""&&(
             <button className='otp-button' onClick={otpcheck}>Verify</button> 
+            )}
 
             {otpin && (
               <div className="otp-group">

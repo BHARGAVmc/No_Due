@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate,useLocation } from 'react-router-dom';
 import './Login.css'; 
 
 export default function Login() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [gmail, setgmail] = useState('');
   const [mailErr, setmailErr] = useState('');
   const [password, setpassword] = useState('');
   const [passErr, setpassErr] = useState('');
-
+  const { role } = location.state || {};
   
   const handleEmailChange = (value) => {
     setgmail(value);
@@ -38,10 +39,14 @@ export default function Login() {
     e.preventDefault();
     if (!gmail || !password || mailErr || passErr) {
       alert('Please fix the errors before submitting.');
-    } else {
-      alert('Login successful!');
-      
+    }else{
+      navigate('/SubjectDash')
     }
+    // } else if(==="Student"){
+    //       navigate('/SubjectDash')
+    // }else if(role==="Faculty"){
+    //   navigate('/FacultyDash')
+    // }
   };
 
   return (
