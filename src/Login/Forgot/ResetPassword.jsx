@@ -1,38 +1,38 @@
 // src/ResetPassword.js
-import React, { useContext, useState } from "react";
-import { EmailContext } from "./OtpPage"; // EmailContext from OtpPage
+import React, { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./ResetPassword.css";
 
 function ResetPassword() {
-  const { email } = useContext(EmailContext);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const email = location.state?.email || "";
+
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [resetDone, setResetDone] = useState(false);
+  // const [resetDone, setResetDone] = useState(false);
 
   const handleReset = () => {
     if (!email || !password || !confirmPassword) {
       alert("All fields are required.");
       return;
-    }
-
-    if (password !== confirmPassword) {
+    }else if (password !== confirmPassword) {
       alert("Passwords do not match.");
-      return;
+    }else{
+      alert('Password Reseted Successfully')
+      navigate('/Login')
     }
 
-    alert(`Password reset for ${email}`);
-    setResetDone(true);
+    // alert(Password reset for ${email});
+    // setResetDone(true);
   };
 
-  if (resetDone) {
-    return (
-      <div className="reset-container">
-        <h1 style={{ color: "green", fontSize: "2rem", textAlign: "center" }}>
-          ✅ Your password is reseted.
-        </h1>
-      </div>
-    );
+  if (!email) {
+    // If no email passed, redirect back
+    navigate("/");
+    return null;
   }
+
 
   return (
     <div className="reset-container">

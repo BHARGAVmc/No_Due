@@ -71,7 +71,9 @@ export default function Signup() {
       alert("Please submit all fields properly");
     } else {
       alert("Registered successfully!");
-      navigate('/Login',{ state: { role: userType } })
+      navigate('/Login')
+      // navigate('/Login',{ state: { role: userType } })
+
     }
   };
 
@@ -99,8 +101,8 @@ export default function Signup() {
                 onChange={(e) => setUserType(e.target.value)}
               />
               Student
-            </label>{'            '} 
-              <label>
+            </label>
+            <label>
                 <input
                   type="radio"
                   name="userType"
@@ -118,7 +120,7 @@ export default function Signup() {
               onChange={(e) => handleEmailChange(e.target.value)}
             />{' '}
             <span className="error-text">{mailErr}</span><br />
-            {mailErr==="" && !gmail==""&&(
+            {mailErr==="" && gmail!==""&&otpErr!=="Successful"&&(
             <button className='otp-button' onClick={otpcheck}>Verify</button> 
             )}
 

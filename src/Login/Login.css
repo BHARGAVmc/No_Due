@@ -66,3 +66,7 @@ button {
 button:hover {
   background-color: #1bb9b9;
 }
+.forgot{ 
+  cursor: pointer;
+   color:#1bb9b9;
+   }

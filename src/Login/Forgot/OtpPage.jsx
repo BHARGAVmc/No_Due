@@ -1,25 +1,11 @@
 // src/OtpPage.js
-import React, { useState, useEffect, createContext, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./OtpPage.css";
 
-// ✅ Email Context
-export const EmailContext = createContext();
-
-export const EmailProvider = ({ children }) => {
-  const [email, setEmail] = useState("");
-  return (
-    <EmailContext.Provider value={{ email, setEmail }}>
-      {children}
-    </EmailContext.Provider>
-  );
-};
-
-// ✅ OTP Page Component
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const OtpPage = () => {
-  const { setEmail } = useContext(EmailContext);
   const [inputEmail, setInputEmail] = useState("");
   const [otpSent, setOtpSent] = useState(false);
   const [otp, setOtp] = useState("");
@@ -37,16 +23,15 @@ const OtpPage = () => {
       return;
     }
 
-    setEmail(inputEmail);
     setOtpSent(true);
     setTimer(30);
-    console.log(`OTP sent to ${inputEmail}`);
+    // console.log(OTP sent to ${inputEmail});
   };
 
   const handleVerifyOtp = () => {
     if (otp === "123456") {
       alert("OTP Verified Successfully!");
-      navigate("/reset-password");
+      navigate("/ResetPassword", { state: { email: inputEmail } });
     } else {
       alert("Invalid OTP!");
     }
@@ -54,7 +39,7 @@ const OtpPage = () => {
 
   const handleResend = () => {
     setTimer(30);
-    console.log(`Resending OTP to ${inputEmail}`);
+    // console.log(Resending OTP to ${inputEmail});
   };
 
   useEffect(() => {

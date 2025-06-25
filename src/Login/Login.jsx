@@ -77,7 +77,12 @@ export default function Login() {
         <br />
         <span className="error-text">{passErr}</span>
       </div>
-
+      <p
+        onClick={() => navigate('/OtpPage')}
+        className='forgot'
+      >
+        Forgot Password?
+      </p>
       <div>
         <button type="submit" onClick={check}>Login</button>{' '}
         <button type="button" onClick={() => navigate('/Signup')}>Sign up</button>
