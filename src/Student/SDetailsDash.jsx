@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import './require.css';
+import './SDetailsDash.css';
 // Item component
 const Item = ({ title, checked, onChange, status, onClickTitle }) => {
     const handleTitleClick = () => {
