@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import './SDetailsDash.css';
+import './require.css';
 // Item component
 const Item = ({ title, checked, onChange, status, onClickTitle }) => {
     const handleTitleClick = () => {
@@ -9,10 +9,7 @@ const Item = ({ title, checked, onChange, status, onClickTitle }) => {
     return (
         <div className="item">
             <div className="item-content">
-                <span
-                    className="cursor-pointer hover:underline"
-                    onClick={handleTitleClick}
-                >
+                <span className="cursor-pointer hover:underline" onClick={handleTitleClick}>
                     {title}
                 </span>
                 {status && <span className="status">{status}</span>}
@@ -31,7 +28,6 @@ const SubItem = ({ title, checked, onChange, onUpload }) => {
     const handleUploadClick = () => {
         fileInputRef.current.click();
     };
-
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         if (file) {
@@ -82,7 +78,6 @@ function App() {
         'Soft Copy': false,
     });
     const [showDetails, setShowDetails] = useState(false);
-
     const handleCheck = (item) => {
         setCheckedItems((prev) => {
             const newState = { ...prev, [item]: !prev[item] };
@@ -112,19 +107,16 @@ function App() {
     const radius = 20;
     const circumference = 2 * Math.PI * radius;
     const strokeDasharray = `${(percentage / 100) * circumference} ${circumference}`;
+    const itemTitles = ['Assignment 1', 'Assignment 2', 'NPTEL Certificate'];
+    const subItemTitles = ['Hard Copy', 'Soft Copy'];
     return (
         <div className="container">
             <div className="header">
-                <button>←</button>
+                <button onClick={() => alert('You went back')}>←</button>
                 <span className="title">Subject 1</span>
                 <div className="percentage-container">
                     <svg width="50" height="50" className="progress-circle">
-                        <circle
-                            className="progress-circle-bg"
-                            cx="25"
-                            cy="25"
-                            r={radius}
-                        />
+                        <circle className="progress-circle-bg" cx="25" cy="25" r={radius} />
                         <circle
                             className="progress-circle-fill"
                             cx="25"
@@ -146,41 +138,29 @@ function App() {
                     </svg>
                 </div>
             </div>
-            <Item
-                title="Assignment 1"
-                checked={checkedItems['Assignment 1']}
-                onChange={() => handleCheck('Assignment 1')}
-                status={null}
-                onClickTitle={() => handleTitleClick('Assignment 1')}
-            />
-            <Item
-                title="Assignment 2"
-                checked={checkedItems['Assignment 2']}
-                onChange={() => handleCheck('Assignment 2')}
-                status={null}
-                onClickTitle={() => handleTitleClick('Assignment 2')}
-            />
-            <Item
-                title="NPTEL Certificate"
-                checked={checkedItems['NPTEL Certificate']}
-                onChange={() => handleCheck('NPTEL Certificate')}
-                status={checkedItems['NPTEL Certificate'] ? 'Uploaded' : null}
-                onClickTitle={() => handleTitleClick('NPTEL Certificate')}
-            />
+            {/* Mapping Items */}
+            {itemTitles.map((title) => (
+                <Item
+                    key={title}
+                    title={title}
+                    checked={checkedItems[title]}
+                    onChange={() => handleCheck(title)}
+                    status={title === 'NPTEL Certificate' && checkedItems[title] ? 'Uploaded' : null}
+                    onClickTitle={() => handleTitleClick(title)}
+                />
+            ))}
+            {/* Mapping SubItems */}
             {showDetails && (
                 <div className="sub-items">
-                    <SubItem
-                        title="Hard Copy"
-                        checked={checkedItems['Hard Copy']}
-                        onChange={() => handleCheck('Hard Copy')}
-                        onUpload={() => {}}
-                    />
-                    <SubItem
-                        title="Soft Copy"
-                        checked={checkedItems['Soft Copy']}
-                        onChange={() => handleCheck('Soft Copy')}
-                        onUpload={handleUpload}
-                    />
+                    {subItemTitles.map((title) => (
+                        <SubItem
+                            key={title}
+                            title={title}
+                            checked={checkedItems[title]}
+                            onChange={() => handleCheck(title)}
+                            onUpload={title === 'Soft Copy' ? handleUpload : () => {}}
+                        />
+                    ))}
                 </div>
             )}
         </div>
