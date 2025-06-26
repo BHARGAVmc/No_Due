@@ -9,6 +9,7 @@ import ResetPassword from '../src/Login/Forgot/ResetPassword';
 import FacultyDash from '../src/Faculty/FacultyDash';
 import SubjectDash from '../src/Student/SubjectDash';
 import CertificateView from '../src/Faculty/CertificateView';
+import SDetailsDash from '../src/Student/SDetailsDash';
 function App() {
   return (
      <BrowserRouter>
@@ -20,6 +21,7 @@ function App() {
         <Route path="/ResetPassword" element={<ResetPassword/>}/>
         <Route path="/FacultyDash" element={<FacultyDash/>}/>
         <Route path="/SubjectDash" element={<SubjectDash/>}/>
+        <Route path="/SDetailsDash" element={<SDetailsDash/>}/>
         <Route path="/ResetPassword" element={<ResetPassword/>}/>
         <Route path="/CertificateView" element={<CertificateView/>}/>
       </Routes>

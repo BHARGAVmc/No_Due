@@ -34,11 +34,16 @@ const CircularProgress = ({ percentage }) => {
   );
 };
 
-const SubjectCard = ({ id, name, completed, total, onClick }) => {
+const SubjectCard = ({ id, name, completed, total }) => {
   const percentage = Math.round((completed / total) * 100);
 
+  const handleClick = () => {
+    // Navigate to SDetailsDash page
+    window.location.href = 'SDetailsDash';  // You can also use SDetailsDash.html if it's an HTML file
+  };
+
   return (
-    <div className="card" onClick={onClick}>
+    <div className="card" onClick={handleClick}>
       <div className="card-left">{name}</div>
       <div className="card-right">
         <span className="label">Percentage</span>
@@ -48,7 +53,7 @@ const SubjectCard = ({ id, name, completed, total, onClick }) => {
   );
 };
 
-const Home = ({ onSelect }) => {
+const Home = () => {
   return (
     <div className="home-container">
       <h1>List of Subjects</h1>
@@ -59,36 +64,14 @@ const Home = ({ onSelect }) => {
           name={subject.name}
           completed={subject.completed}
           total={subject.total}
-          onClick={() => onSelect(subject.id)}
         />
       ))}
     </div>
   );
 };
 
-const SubjectDetails = ({ subjectId, onBack }) => {
-  const subject = subjects.find(s => s.id === subjectId);
-
-  return (
-    <div className="home-container">
-      <button className="back-btn" onClick={onBack}>← Back</button>
-      <h1>Subject Details</h1>
-      {subject ? (
-        <>
-          <p><strong>ID:</strong> {subject.id}</p>
-          <p><strong>Name:</strong> {subject.name}</p>
-          <p><strong>Tasks Completed:</strong> {subject.completed}/{subject.total}</p>
-        </>
-      ) : (
-        <p>Subject not found</p>
-      )}
-    </div>
-  );
-};
-
 const App = () => {
   const [showProfile, setShowProfile] = useState(false);
-  const [selectedSubjectId, setSelectedSubjectId] = useState(null);
   const name = "U. Varalakshmi";
   const rollNo = "21BCE13360";
 
@@ -96,8 +79,6 @@ const App = () => {
     alert("You have been logged out.");
     setShowProfile(false);
   };
-
-  const handleBack = () => setSelectedSubjectId(null);
 
   return (
     <div className="App">
@@ -117,11 +98,7 @@ const App = () => {
         </div>
       )}
 
-      {selectedSubjectId ? (
-        <SubjectDetails subjectId={selectedSubjectId} onBack={handleBack} />
-      ) : (
-        <Home onSelect={setSelectedSubjectId} />
-      )}
+      <Home />
     </div>
   );
 };
