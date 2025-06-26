@@ -8,6 +8,7 @@ import ResetPassword from '../src/Login/Forgot/ResetPassword';
 // import { EmailProvider } from './Login/Forgot/EmailContext';
 import FacultyDash from '../src/Faculty/FacultyDash';
 import SubjectDash from '../src/Student/SubjectDash';
+import CertificateView from '../src/Faculty/CertificateView';
 function App() {
   return (
      <BrowserRouter>
@@ -20,6 +21,7 @@ function App() {
         <Route path="/FacultyDash" element={<FacultyDash/>}/>
         <Route path="/SubjectDash" element={<SubjectDash/>}/>
         <Route path="/ResetPassword" element={<ResetPassword/>}/>
+        <Route path="/CertificateView" element={<CertificateView/>}/>
       </Routes>
     </BrowserRouter>
   );

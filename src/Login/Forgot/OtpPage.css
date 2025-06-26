@@ -3,7 +3,7 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #b3ecf2; /* light cyan */
+  background-color:#9fe4ee; /* light cyan */
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -45,7 +45,7 @@ input[type="text"] {
 }
 
 .btn-primary {
-  background-color: #00cccc;
+  background-color: #23d7d7;
   color: #fff;
   padding: 10px 20px;
   font-size: 16px;
@@ -58,7 +58,7 @@ input[type="text"] {
 }
 
 .btn-primary:hover {
-  background-color: #009999;
+  background-color:  #23d7d7;
 }
 
 .btn-link {
