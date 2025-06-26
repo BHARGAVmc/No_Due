@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, useNavigate, useParams } from 'react-router-dom';
 import { FaUserCircle } from 'react-icons/fa';
 import './SubjectDash.css';
 
@@ -35,12 +34,11 @@ const CircularProgress = ({ percentage }) => {
   );
 };
 
-const SubjectCard = ({ id, name, completed, total }) => {
-  const navigate = useNavigate();
+const SubjectCard = ({ id, name, completed, total, onClick }) => {
   const percentage = Math.round((completed / total) * 100);
 
   return (
-    <div className="card" onClick={() => navigate(`/subject/${id}`)}>
+    <div className="card" onClick={onClick}>
       <div className="card-left">{name}</div>
       <div className="card-right">
         <span className="label">Percentage</span>
@@ -50,7 +48,7 @@ const SubjectCard = ({ id, name, completed, total }) => {
   );
 };
 
-const Home = () => {
+const Home = ({ onSelect }) => {
   return (
     <div className="home-container">
       <h1>List of Subjects</h1>
@@ -61,17 +59,19 @@ const Home = () => {
           name={subject.name}
           completed={subject.completed}
           total={subject.total}
+          onClick={() => onSelect(subject.id)}
         />
       ))}
     </div>
   );
 };
 
-const SubjectDetails = () => {
-  const { subjectId } = useParams();
-  const subject = subjects.find(s => s.id.toString() === subjectId);
+const SubjectDetails = ({ subjectId, onBack }) => {
+  const subject = subjects.find(s => s.id === subjectId);
+
   return (
     <div className="home-container">
+      <button className="back-btn" onClick={onBack}>← Back</button>
       <h1>Subject Details</h1>
       {subject ? (
         <>
@@ -88,6 +88,7 @@ const SubjectDetails = () => {
 
 const App = () => {
   const [showProfile, setShowProfile] = useState(false);
+  const [selectedSubjectId, setSelectedSubjectId] = useState(null);
   const name = "U. Varalakshmi";
   const rollNo = "21BCE13360";
 
@@ -96,31 +97,32 @@ const App = () => {
     setShowProfile(false);
   };
 
+  const handleBack = () => setSelectedSubjectId(null);
+
   return (
-    <Router>
-      <div className="App">
-        <div className="top-bar">
-          <FaUserCircle
-            className="profile-icon-top"
-            onClick={() => setShowProfile(!showProfile)}
-            title={showProfile ? "Hide Profile" : "View Profile"}
-          />
-        </div>
-
-        {showProfile && (
-          <div className="profile-box">
-            <p><strong>Name:</strong> {name}</p>
-            <p><strong>Roll No:</strong> {rollNo}</p>
-            <button className="logout-btn" onClick={handleLogout}>Logout</button>
-          </div>
-        )}
-
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/subject/:subjectId" element={<SubjectDetails />} />
-        </Routes>
+    <div className="App">
+      <div className="top-bar">
+        <FaUserCircle
+          className="profile-icon-top"
+          onClick={() => setShowProfile(!showProfile)}
+          title={showProfile ? "Hide Profile" : "View Profile"}
+        />
       </div>
-    </Router>
+
+      {showProfile && (
+        <div className="profile-box">
+          <p><strong>Name:</strong> {name}</p>
+          <p><strong>Roll No:</strong> {rollNo}</p>
+          <button className="logout-btn" onClick={handleLogout}>Logout</button>
+        </div>
+      )}
+
+      {selectedSubjectId ? (
+        <SubjectDetails subjectId={selectedSubjectId} onBack={handleBack} />
+      ) : (
+        <Home onSelect={setSelectedSubjectId} />
+      )}
+    </div>
   );
 };
 
