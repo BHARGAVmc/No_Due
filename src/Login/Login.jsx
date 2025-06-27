@@ -40,8 +40,8 @@ export default function Login() {
     if (!gmail || !password || mailErr || passErr) {
       alert('Please fix the errors before submitting.');
     }else{
-      navigate('/SubjectDash')
-      //  navigate('/FacultyDash')
+      // navigate('/SubjectDash')
+       navigate('/FacultyDash')
     }
     // } else if(==="Student"){
     //       navigate('/SubjectDash')

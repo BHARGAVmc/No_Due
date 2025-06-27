@@ -27,7 +27,7 @@ function FacultyDash() {
   };
   const handleClassClick = (deptName,className) => {
     console.log('Clicked:', deptName,className);
-    navigate('/Dash',{state : {department:deptName,section:className}});
+    navigate('/DetailsDash',{state : {department:deptName,section:className}});
   };
   const toggleProfile = () => {
     setShowProfile(!showProfile);

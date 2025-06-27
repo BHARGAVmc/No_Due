@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./approval.css";
+import "./DeatailsDash.css";
 
 const Approval = () => {
   const [students, setStudents] = useState([

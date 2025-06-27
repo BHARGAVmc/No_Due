@@ -10,6 +10,7 @@ import FacultyDash from '../src/Faculty/FacultyDash';
 import SubjectDash from '../src/Student/SubjectDash';
 import CertificateView from '../src/Faculty/CertificateView';
 import SDetailsDash from '../src/Student/SDetailsDash';
+import DetailsDash from '../src/Faculty/DetailsDash';
 function App() {
   return (
      <BrowserRouter>
@@ -20,8 +21,9 @@ function App() {
         <Route path="/OtpPage" element={<OtpPage/>}/>
         <Route path="/ResetPassword" element={<ResetPassword/>}/>
         <Route path="/FacultyDash" element={<FacultyDash/>}/>
+        <Route path="/FacultyDash" element={<FacultyDash/>}/>
         <Route path="/SubjectDash" element={<SubjectDash/>}/>
-        <Route path="/SDetailsDash" element={<SDetailsDash/>}/>
+        <Route path="/DetailsDash" element={<DetailsDash/>}/>
         <Route path="/ResetPassword" element={<ResetPassword/>}/>
         <Route path="/CertificateView" element={<CertificateView/>}/>
       </Routes>
