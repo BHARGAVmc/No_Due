@@ -41,6 +41,7 @@ export default function Login() {
       alert('Please fix the errors before submitting.');
     }else{
       navigate('/SubjectDash')
+      //  navigate('/FacultyDash')
     }
     // } else if(==="Student"){
     //       navigate('/SubjectDash')
