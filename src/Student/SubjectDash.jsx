@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import {useNavigate} from 'react-router-dom';
 import { FaUserCircle } from 'react-icons/fa';
 import './SubjectDash.css';
 
@@ -8,7 +9,7 @@ const subjects = [
   { id: 3, name: "Subject 3", completed: 2, total: 5 },
   { id: 4, name: "Subject 4", completed: 1, total: 5 }
 ];
-
+  
 const CircularProgress = ({ percentage }) => {
   const radius = 15.9155;
   const dash = (percentage * 100) / 100;
@@ -36,10 +37,11 @@ const CircularProgress = ({ percentage }) => {
 
 const SubjectCard = ({ id, name, completed, total }) => {
   const percentage = Math.round((completed / total) * 100);
+  const navigate=useNavigate();
 
-  const handleClick = () => {
+const handleClick = () => {
     // Navigate to SDetailsDash page
-    window.location.href = 'SDetailsDash';  // You can also use SDetailsDash.html if it's an HTML file
+    navigate('/SDetailsDash') ; // You can also use SDetailsDash.html if it's an HTML file
   };
 
   return (
@@ -52,7 +54,6 @@ const SubjectCard = ({ id, name, completed, total }) => {
     </div>
   );
 };
-
 const Home = () => {
   return (
     <div className="home-container">

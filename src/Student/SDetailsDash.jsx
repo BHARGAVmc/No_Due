@@ -1,14 +1,12 @@
 import React, { useState, useRef } from 'react';
 import './SDetailsDash.css';
 import { useNavigate } from 'react-router-dom';
-
 // Item component
 const Item = ({ title, checked, onChange, status, onClickTitle }) => {
     const handleTitleClick = () => {
         onClickTitle();
         alert(`checked ? ${title} was submitted : You have not submitted ${title}`);
     };
-
     return (
         <div className="sdetails-item">
             <div className="sdetails-item-content">
@@ -24,7 +22,6 @@ const Item = ({ title, checked, onChange, status, onClickTitle }) => {
         </div>
     );
 };
-
 // SubItem component
 const SubItem = ({ title, checked, onChange, onUpload }) => {
     const fileInputRef = useRef();
@@ -32,7 +29,6 @@ const SubItem = ({ title, checked, onChange, onUpload }) => {
     const handleUploadClick = () => {
         fileInputRef.current.click();
     };
-
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         if (file) {
@@ -75,7 +71,6 @@ const SubItem = ({ title, checked, onChange, onUpload }) => {
         </div>
     );
 };
-
 function App() {
     const navigate = useNavigate();
     const [checkedItems, setCheckedItems] = useState({

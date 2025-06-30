@@ -98,15 +98,21 @@ body {
     justify-content: center;
     cursor: pointer;
     border-radius: 4px;
+    background-color: transparent;
 }
 
 .sdetails-checkbox.checked {
-    background-color: #007BFF;
+    background-color: transparent;
 }
 
 .sdetails-checkbox.checked::after {
-    content: '✓';
-    color: white;
+    content: ''; /* No tick */
+}
+
+.sdetails-checkbox.disabled {
+    pointer-events: none;
+    opacity: 1;
+    cursor: default;
 }
 
 .sdetails-sub-items {

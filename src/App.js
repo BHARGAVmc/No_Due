@@ -23,6 +23,7 @@ function App() {
         <Route path="/FacultyDash" element={<FacultyDash/>}/>
         <Route path="/FacultyDash" element={<FacultyDash/>}/>
         <Route path="/SubjectDash" element={<SubjectDash/>}/>
+         <Route path="/SDetailsDash" element={<SDetailsDash/>}/>
         <Route path="/DetailsDash" element={<DetailsDash/>}/>
         <Route path="/ResetPassword" element={<ResetPassword/>}/>
         <Route path="/CertificateView" element={<CertificateView/>}/>
@@ -30,5 +31,4 @@ function App() {
     </BrowserRouter>
   );
 }
-
 export default App;

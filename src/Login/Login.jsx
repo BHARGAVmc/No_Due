@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate,useLocation } from 'react-router-dom';
-import './Login.css'; 
-
+import './Login.css';
 export default function Login() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -22,7 +21,6 @@ export default function Login() {
       setmailErr('');
     }
   };
-
   const handlePasswordChange = (value) => {
     setpassword(value);
     const val = /^[a-zA-Z0-9~!@#$%^&*_-|?]{6,}$/;
@@ -40,7 +38,7 @@ export default function Login() {
     if (!gmail || !password || mailErr || passErr) {
       alert('Please fix the errors before submitting.');
     }else{
-      // navigate('/SubjectDash')
+      //navigate('/SubjectDash')
        navigate('/FacultyDash')
     }
     // } else if(==="Student"){

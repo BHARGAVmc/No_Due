@@ -2,8 +2,8 @@
   text-align: center;
 }
 *{
-  overflow-x: hidden;
-  overflow-y: hidden;
+  /* overflow-x: hidden; */
+  /* overflow-y: hidden; */
 }
 .App-logo {
   height: 40vmin;

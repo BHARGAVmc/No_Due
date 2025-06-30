@@ -35,7 +35,7 @@ function FacultyDash() {
   return (
   <div className="App">
     <div className="header-bar">
-      <div className="title">Classes attending</div>
+      <div className="title">Classes Attending</div>
       <div className="profile-group">
         <FaCircleUser className="profile-icon" size={28} onClick={toggleProfile} />
         <span className="faculty-name">{name}</span>
