@@ -1,12 +1,11 @@
 import React, { useState, useRef } from 'react';
 import './SDetailsDash.css';
-import { useNavigate } from 'react-router-dom';
 
 // Item component
 const Item = ({ title, checked, onChange, status, onClickTitle }) => {
     const handleTitleClick = () => {
         onClickTitle();
-        alert(`checked ? ${title} was submitted : You have not submitted ${title}`);
+        alert(checked ? `${title} was submitted` : `You have not submitted ${title}`);
     };
 
     return (
@@ -18,8 +17,13 @@ const Item = ({ title, checked, onChange, status, onClickTitle }) => {
                 {status && <span className="sdetails-status">{status}</span>}
             </div>
             <div
-                className={`sdetails-checkbox ${checked ? 'checked' : ''}`}
-                onClick={onChange}
+                title={checked ? "Already submitted" : ""}
+                className={`sdetails-checkbox ${checked ? 'checked disabled' : ''}`}
+                onClick={() => {
+                    if (!checked) {
+                        onChange();
+                    }
+                }}
             />
         </div>
     );
@@ -69,15 +73,19 @@ const SubItem = ({ title, checked, onChange, onUpload }) => {
                 )}
             </div>
             <div
-                className={`sdetails-checkbox ${checked ? 'checked' : ''}`}
-                onClick={onChange}
+                title={checked ? "Already submitted" : ""}
+                className={`sdetails-checkbox ${checked ? 'checked disabled' : ''}`}
+                onClick={() => {
+                    if (!checked) {
+                        onChange();
+                    }
+                }}
             />
         </div>
     );
 };
 
 function App() {
-    const navigate = useNavigate();
     const [checkedItems, setCheckedItems] = useState({
         'Assignment 1': false,
         'Assignment 2': false,
@@ -114,9 +122,8 @@ function App() {
         alert(`File "${file.name}" uploaded successfully!`);
     };
 
-    const totalTasks = 5;
-    const completedTasks = Object.values(checkedItems).filter(Boolean).length;
-    const percentage = (completedTasks / totalTasks) * 100;
+    // Static 0% Progress
+    const percentage = 0;
     const radius = 20;
     const circumference = 2 * Math.PI * radius;
     const strokeDasharray = `${(percentage / 100) * circumference} ${circumference}`;
@@ -127,10 +134,15 @@ function App() {
     return (
         <div className="sdetails-container">
             <div className="sdetails-header">
-                <button onClick={() => navigate('/SubjectDash')}>←</button>
+                <button onClick={() => alert('You went back')}>←</button>
                 <span className="title">Subject 1</span>
                 <div className="sdetails-percentage-container">
-                    <svg width="50" height="50" className="sdetails-progress-circle">
+                    <svg
+                        width="50"
+                        height="50"
+                        className="sdetails-progress-circle"
+                        style={{ pointerEvents: 'none' }}
+                    >
                         <circle
                             className="sdetails-progress-circle-bg"
                             cx="25"
@@ -152,7 +164,7 @@ function App() {
                                 textAnchor="middle"
                                 dy=".3em"
                             >
-                                {percentage.toFixed(0)}%
+                                0%
                             </text>
                         </g>
                     </svg>

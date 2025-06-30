@@ -1,11 +1,10 @@
-/* body {
+body {
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
-  background-color: #e0f7fa;
+  background-color: #9fe4ee;
 }
-
-.container {
+.container-dash {
   max-width: 900px;
   margin: 20px auto;
   padding: 20px;
@@ -14,8 +13,7 @@
   box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.1);
   position: relative;
 }
-
-.top-bar {
+.top {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -27,7 +25,16 @@ h1 {
   margin: 0;
 }
 
-.back-btn {
+.back-button {
+  background-color: #00695c;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+.add-button {
   background-color: #00695c;
   color: white;
   border: none;
@@ -37,23 +44,14 @@ h1 {
   font-size: 14px;
 }
 
-.add-btn {
-  background-color: #00695c;
-  color: white;
-  border: none;
-  padding: 8px 14px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-.dropdown-container {
+.dcontainer {
   position: relative;
+  z-index: 1001;
 }
 
-.dropdown-content {
+.dcontent {
   position: absolute;
-  right: 0;
+  left: 0;
   top: 40px;
   background-color: white;
   min-width: 200px;
@@ -61,9 +59,25 @@ h1 {
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
   padding: 10px;
   z-index: 1000;
+   background-color: yellow;
+  border: 2px solid red; 
+ } 
+.dcontainer {
+  position: relative;
+  z-index: 10;
 }
 
-.dropdown-item {
+.dcontent {
+  position: absolute;
+  left: 0;
+  top: 45px;
+  background-color: white;
+  padding: 10px;
+  border: 1px solid black;
+  z-index: 1000;
+}
+
+.ditem {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -87,7 +101,7 @@ h1 {
   cursor: pointer;
 }
 
-.dropdown-content input[type="text"] {
+.dcontent input[type="text"] {
   width: calc(100% - 12px);
   padding: 6px;
   margin-top: 6px;
@@ -95,7 +109,7 @@ h1 {
   border: 1px solid #ccc;
 }
 
-.student-card {
+.Scard {
   background: #f9f9f9;
   padding: 16px;
   border-radius: 10px;
@@ -110,7 +124,7 @@ h1 {
   margin-bottom: 8px;
 }
 
-.dropdown-box {
+.dbox {
   margin-bottom: 10px;
   background-color: #ffffff;
   padding: 10px;
@@ -118,14 +132,14 @@ h1 {
   box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.1);
 }
 
-.student-card input[type="text"] {
+.Scard input[type="text"] {
   width: 100%;
   padding: 8px;
   border-radius: 6px;
   border: 1px solid #ccc;
 }
 
-.save-btn {
+.save-button {
   position: fixed;
   bottom: 20px;
   right: 20px;
@@ -137,4 +151,5 @@ h1 {
   font-size: 16px;
   cursor: pointer;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-} */
+} 
+ 

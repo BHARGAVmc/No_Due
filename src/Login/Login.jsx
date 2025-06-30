@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate,useLocation } from 'react-router-dom';
 import './Login.css'; 
+import axios from 'axios';
 
 export default function Login() {
   const navigate = useNavigate();
@@ -9,7 +10,7 @@ export default function Login() {
   const [mailErr, setmailErr] = useState('');
   const [password, setpassword] = useState('');
   const [passErr, setpassErr] = useState('');
-  const { role } = location.state || {};
+  // const { role } = location.state || {};
   
   const handleEmailChange = (value) => {
     setgmail(value);
@@ -49,6 +50,34 @@ export default function Login() {
     //   navigate('/FacultyDash')
     // }
   };
+
+//   const check = async (e) => {
+//   e.preventDefault();
+//   if (!gmail || !password || mailErr || passErr) {
+//     alert('Please fix the errors before submitting.');
+//     return;
+//   }
+
+//   try {
+//     const response = await axios.post('http://127.0.0.1:8000/auth/login/', {
+//       email: gmail,
+//       password: password,
+//     });
+
+//     const role = response.data.role;
+
+//     if (role === 'student') {
+//       navigate('/SubjectDash');
+//     } else if (role === 'faculty') {
+//       navigate('/FacultyDash');
+//     } else {
+//       alert('Unknown user role');
+//     }
+//   } catch (error) {
+//     console.error('Login error:', error);
+//     alert('Invalid credentials');
+//   }
+// };
 
   return (
     <div className="container">

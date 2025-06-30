@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import './Login.css';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
 // import Login from './Login';
 
 export default function Signup() {
@@ -16,6 +18,7 @@ export default function Signup() {
   const [otp, setotp] = useState('');
   const [otpErr, setotpErr] = useState('');
   const [userType, setUserType] = useState('');
+  const [message, setMessage] = useState('');
 
 
   
@@ -65,17 +68,43 @@ export default function Signup() {
     }
   };
 
-  const check = (e) => {
-    e.preventDefault();
-    if (!gmail || !password || !cpass || mailErr || passErr || cpaassErr) {
-      alert("Please submit all fields properly");
-    } else {
-      alert("Registered successfully!");
-      navigate('/Login')
-      // navigate('/Login',{ state: { role: userType } })
+  // const check = (e) => {
+  //   e.preventDefault();
+  //   if (!gmail || !password || !cpass || mailErr || passErr || cpaassErr) {
+  //     alert("Please submit all fields properly");
+  //   } else {
+  //     alert("Registered successfully!");
+  //     navigate('/Login')
+  //     // navigate('/Login',{ state: { role: userType } })
 
+  //   }
+  // };
+const check = async (e) => {
+  e.preventDefault();
+
+  if (!gmail || !password || !cpass || mailErr || passErr || cpaassErr || otpErr !== "Successful" || !userType) {
+    alert("Please submit all fields properly");
+    return;
+  }
+
+  try {
+    const response = await axios.post("http://127.0.0.1:8000/auth/signup/", {
+      email: gmail,
+      password: password,
+      role: userType
+    });
+
+    // alert(" Signup successful!");
+    setMessage("Signup Successful!");
+    navigate('/Login'); // Redirect to login page
+  } catch (error) {
+    if (error.response) {
+      alert("Signup failed: " + JSON.stringify(error.response.data));
+    } else {
+      alert(" Server not reachable");
     }
-  };
+  }
+};
 
   const otpche = (e) => {
     e.preventDefault();
@@ -165,6 +194,7 @@ export default function Signup() {
             <button onClick={check}>Register</button>{' '}
             <button onClick={() => navigate('/Login')}> Back</button>
           </div>
+          {message && <p className="success-text">{message}</p>}
         </form>
       </center>
     </div>
