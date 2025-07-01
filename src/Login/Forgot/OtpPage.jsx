@@ -55,6 +55,7 @@ const OtpPage = () => {
       <div className="form-group">
         <label>Email ID</label>
         <input
+        className="ip1"
           type="email"
           placeholder="Enter your email..."
           value={inputEmail}
@@ -71,6 +72,7 @@ const OtpPage = () => {
           <div className="form-group">
             <label>Enter OTP</label>
             <input
+            className="ip1"
               type="text"
               placeholder="6-digit OTP"
               maxLength={6}

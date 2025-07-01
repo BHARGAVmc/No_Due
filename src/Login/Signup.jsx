@@ -141,8 +141,9 @@ const check = async (e) => {
                 />
                 Faculty
               </label><br />{' '} <br />
-            <b>Enter Mail Id  : </b>
+            <b>Enter Mail Id  : </b> <br />
             <input
+            className='ip'
               type="text"
               placeholder="Enter mail id"
               value={gmail}
@@ -169,8 +170,9 @@ const check = async (e) => {
           </div>
 
           <div className="form-group">
-            <b>Enter Password : </b>
+            <b>Enter Password : </b> <br />
             <input
+            className='ip'
               type="password"
               placeholder="Enter password"
               value={password}
@@ -180,8 +182,9 @@ const check = async (e) => {
           </div>
 
           <div className="form-group">
-            <b>Confirm Password: </b>
+            <b>Confirm Password: </b> <br />
             <input
+            className='ip'
               type="password"
               placeholder="Enter confirm password"
               value={cpass}

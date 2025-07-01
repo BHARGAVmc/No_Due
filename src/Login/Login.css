@@ -1,6 +1,10 @@
 .container {
-  background-color: #9fe4ee; /* Changed from #23d7d7 to #9fe4ee */
+  /* background-color: #9fe4ee; Changed from #23d7d7 to #9fe4ee */
   height: 100vh;
+    background-image: url("F:\ASAR\no_due\public\ima3.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* opacity: 0.2; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -19,7 +23,10 @@
   margin-bottom: 20px;
   text-align: center;
 }
-
+.img{
+  margin: 22px;
+  border-radius:10px;
+}
 .signup-form {
   background-color: #ffffff; /* ✅ Correct box background */
   padding: 30px 40px;
@@ -27,18 +34,36 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   width: 400px;
 }
-
+.signup{
+  background-color: #ffffff;
+  padding: 30px 40px;
+  border-radius: 10px;
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+  width: 700px;
+}
+.sign{
+  display: flex;
+  gap: 30px;
+}
 .form-group {
   margin-bottom: 20px;
   text-align: left;
 }
 
-input[type="text"],
+/* input[type="text"],
 input[type="password"] {
-  width: 100%;
   padding: 8px 10px;
   border: 1px solid #ccc;
   border-radius: 6px;
+} */
+.ip1{
+  width:90%;
+}
+.ip2{
+  width:90%;
+}
+.ip{
+  width:90%;
 }
 
 .error-text {

@@ -4,12 +4,23 @@
 *{
   overflow-x: hidden;
   overflow-y: hidden;
+  /* background-image: url("C:\Users\bharg\OneDrive\Pictures\Saved Pictures\img1.jpg"); */
+  /* opacity: 0 */
 }
 .App-logo {
   height: 40vmin;
   pointer-events: none;
 }
-
+.app-wrapper {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+}
+.global-bg{
+  background-image: url("F:\ASAR\no_due\public\ima3.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;

@@ -7,7 +7,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #9fe4ee;
+  /* background-color: #9fe4ee; */
   padding: 15px 30px;
   position: relative;
 }

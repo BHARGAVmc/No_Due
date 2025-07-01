@@ -2,6 +2,9 @@
   padding: 20px;
   font-family: Arial, sans-serif;
   position: relative;
+   background-image: url("F:\ASAR\no_due\public\ima3.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .home-container {
@@ -20,9 +23,9 @@
   transition: background-color 0.3s;
 }
 
-.card:hover {
-  background-color: #d0f0ff;
-}
+ .card:hover {
+   background-color: #d0f0ff; 
+} 
 
 .card-left {
   font-weight: bold;

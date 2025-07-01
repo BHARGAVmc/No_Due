@@ -40,12 +40,13 @@ function ResetPassword() {
 
       <div className="form-group">
         <label>Email ID</label>
-        <input type="email" value={email} readOnly />
+        <input type="email" className="ip1" value={email} readOnly />
       </div>
 
       <div className="form-group">
         <label>New Password</label>
         <input
+        className="ip1"
           type="password"
           placeholder="Enter new password..."
           value={password}
@@ -56,6 +57,7 @@ function ResetPassword() {
       <div className="form-group">
         <label>Confirm Password</label>
         <input
+        className="ip1"
           type="password"
           placeholder="Re-enter password..."
           value={confirmPassword}

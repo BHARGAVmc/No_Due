@@ -3,6 +3,7 @@ import { useNavigate,useLocation } from 'react-router-dom';
 import './Login.css'; 
 import axios from 'axios';
 
+
 export default function Login() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -41,8 +42,8 @@ export default function Login() {
     if (!gmail || !password || mailErr || passErr) {
       alert('Please fix the errors before submitting.');
     }else{
-      // navigate('/SubjectDash')
-       navigate('/FacultyDash')
+       navigate('/SubjectDash')
+      // navigate('/FacultyDash')
     }
     // } else if(==="Student"){
     //       navigate('/SubjectDash')
@@ -82,11 +83,16 @@ export default function Login() {
   return (
     <div className="container">
   <div className="content-wrapper">
-    <h1 className="main-heading">Welcome To NoDue System!</h1>
+    <div className='signup'>
+      <h1 className="main-heading">Welcome To NoDue System!</h1>
+      <div className='sign'>
+      <div><img src="/img2.jpg" alt="logo" className='img' height={200} width={200} /> </div>
+      <div>
     <form className="signup-form">
       <div className="form-group">
         <b>Mail ID: </b>
-        <input
+        <input 
+        className='ip1'
           type="text"
           placeholder="Enter mail ID"
           value={gmail}
@@ -98,7 +104,7 @@ export default function Login() {
 
       <div className="form-group">
         <b>Password: </b>
-        <input
+        <input className='ip2'
           type="password"
           placeholder="Enter password"
           value={password}
@@ -116,9 +122,12 @@ export default function Login() {
       <div>
         <button type="submit" onClick={check}>Login</button>{' '}
         <button type="button" onClick={() => navigate('/Signup')}>Sign up</button>
-      </div>
-    </form>
-  </div>
+       </div>
+     </form>
+     </div>
+    </div>
+    </div>
+    </div>
 </div>
   );
 }

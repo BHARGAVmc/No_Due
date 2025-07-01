@@ -13,6 +13,9 @@ import SDetailsDash from '../src/Student/SDetailsDash';
 import DetailsDash from '../src/Faculty/DetailsDash';
 function App() {
   return (
+        <div className="app-wrapper">
+      {/* ✅ Global blurred background */}
+      <div className="global-bg"></div>
      <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login/>}/>
@@ -28,6 +31,7 @@ function App() {
         <Route path="/CertificateView" element={<CertificateView/>}/>
       </Routes>
     </BrowserRouter>
+    </div>
   );
 }
 
