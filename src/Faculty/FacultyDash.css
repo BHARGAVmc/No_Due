@@ -17,18 +17,15 @@
   flex: 1;
   text-align: center;
 }
-
 .profile-group {
   display: flex;
   align-items: center;
   gap: 10px;
 }
-
 .profile-icon {
   color: white;
   cursor: pointer;
 }
-
 .faculty-name {
   font-weight: bold;
   font-size: 18px;
