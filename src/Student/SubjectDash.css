@@ -1,141 +1,27 @@
-.App {
-  padding: 20px;
-  font-family: Arial, sans-serif;
-  position: relative;
-   background-image: url("F:\ASAR\no_due\public\ima3.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-}
 
-.home-container {
-  margin-top: 60px;
-}
-
-.card {
-  display: flex;
-  align-items: center;
-  padding: 15px;
-  margin: 10px 0;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: #f0f0f0;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
- .card:hover {
-   background-color: #d0f0ff; 
-} 
-
-.card-left {
-  font-weight: bold;
-  font-size: 1.2rem;
-}
-
-.top-bar {
-  position: absolute;
-  top: 10px;
-  right: 20px;
-}
-
-.profile-icon-top {
-  font-size: 30px;
-  cursor: pointer;
-}
-
-.profile-box {
-  position: absolute;
-  top: 50px;
-  right: 20px;
-  background-color: #f0f0f0;
-  border: 1px solid #ccc;
-  padding: 10px;
-  border-radius: 8px;
-}
-
-.logout-btn {
-  background-color: #ff4d4d;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  cursor: pointer;
-  margin-top: 10px;
-}
-body {
+html, body {
   margin: 0;
   padding: 0;
+  height: 100%;
+  overflow: hidden; 
   font-family: Arial, sans-serif;
-  background-color: #a4e2ec;
+  
 }
 
 .App {
+  height: 100vh; 
   padding: 20px;
   position: relative;
-}
-
-.home-container {
-  margin-top: 60px;
-}
-
-.card {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 20px;
-  margin: 10px 0;
-  border: 1px solid #ccc;
-  border-radius: 12px;
-  background-color: white;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.card:hover {
-  background-color: #e6faff;
-}
-
-.card-left {
-  font-weight: bold;
-  font-size: 1.2rem;
-}
-
-.card-right {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  box-sizing: border-box;
+  overflow: hidden; 
+  background-image: url("F:\ASAR\no_due\public\ima3.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  
 }
 
-.label {
-  font-size: 12px;
-  font-weight: bold;
-}
-
-.circular-chart {
-  width: 40px;
-  height: 40px;
-}
-
-.circle-bg {
-  fill: none;
-  stroke: #eee;
-  stroke-width: 3.8;
-}
-
-.circle-progress {
-  fill: none;
-  stroke: #000;
-  stroke-width: 3.8;
-  stroke-linecap: round;
-  transform: rotate(-90deg);
-  transform-origin: center;
-  transition: stroke-dasharray 0.3s;
-}
-
-.percentage-text {
-  font-size: 0.3em;
-  text-anchor: middle;
-  fill: black;
-}
 
 .top-bar {
   position: absolute;
@@ -166,4 +52,73 @@ body {
   margin-top: 10px;
   cursor: pointer;
   border-radius: 5px;
+}
+
+
+.home-container {
+  margin-top: 60px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+
+.card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  background-color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+/* .card:hover {
+  background-color: #e6faff;
+} */
+
+.card-left {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.card-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+
+.circular-chart {
+  width: 40px;
+  height: 40px;
+}
+
+.circle-bg {
+  fill: none;
+  stroke: #eee;
+  stroke-width: 3.8;
+}
+
+.circle-progress {
+  fill: none;
+  stroke: #000;
+  stroke-width: 3.8;
+  stroke-linecap: round;
+  transform: rotate(-90deg);
+  transform-origin: center;
+  transition: stroke-dasharray 0.3s;
+}
+
+.percentage-text {
+  font-size: 0.3em;
+  text-anchor: middle;
+  fill: black;
 }

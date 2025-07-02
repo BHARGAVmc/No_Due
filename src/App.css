@@ -1,12 +1,12 @@
 .App {
   text-align: center;
 }
-*{
+  *{
   overflow-x: hidden;
   overflow-y: hidden;
   /* background-image: url("C:\Users\bharg\OneDrive\Pictures\Saved Pictures\img1.jpg"); */
   /* opacity: 0 */
-}
+ }
 .App-logo {
   height: 40vmin;
   pointer-events: none;
