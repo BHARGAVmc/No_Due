@@ -1,18 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Login from "../src/Login/Login";
-import Signup from '../src/Login/Signup';
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import StudentDetailsForm from "./StudentDetailsForm";
+import SDetailsDash from "./SDetailsDash";
+
 function App() {
   return (
-     <BrowserRouter>
+    <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Login/>}/>
-        <Route path="/Signup" element={<Signup/>}/>
-        <Route path="/Login" element={<Login/>}/>
+        <Route path="/" element={<StudentDetailsForm />} />
+        <Route path="/sdetailsdash" element={<SDetailsDash />} />
       </Routes>
     </BrowserRouter>
   );
 }
 
 export default App;
+
