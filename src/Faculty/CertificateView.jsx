@@ -1,14 +1,16 @@
 import React from 'react';
+import { useNavigate } from "react-router-dom";
 import './CertificateView.css';
 
 function CertificateView({ onBack }) {
+  const navigate = useNavigate();
   const handleApprove = () => alert("✅ Certificate Approved");
   const handleDeny = () => alert("❌ Certificate Denied");
 
   return (
     <div className="certificate-wrapper">
       {/* Top-left back button */}
-      <button className="back-btn" onClick={onBack || (() => alert("Back clicked"))}>←</button>
+      <button className="back-btn" onClick={()=>navigate('/DetailsDash')}>←</button>
 
       <h1 className="heading">Certificate</h1>
 

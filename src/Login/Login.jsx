@@ -37,48 +37,48 @@ export default function Login() {
     }
   };
 
-  // const check = (e) => {
-  //   e.preventDefault();
-  //   if (!gmail || !password || mailErr || passErr) {
-  //     alert('Please fix the errors before submitting.');
-  //   }else{
-  //      navigate('/SubjectDash')
-  //     // navigate('/FacultyDash')
-  //   }
-  //   // } else if(==="Student"){
-  //   //       navigate('/SubjectDash')
-  //   // }else if(role==="Faculty"){
-  //   //   navigate('/FacultyDash')
-  //   // }
-  // };
-
-  const check = async (e) => {
-  e.preventDefault();
-  if (!gmail || !password || mailErr || passErr) {
-    alert('Please fix the errors before submitting.');
-    return;
-  }
-
-  try {
-    const response = await axios.post('http://127.0.0.1:8000/auth/login/', {
-      email: gmail,
-      password: password,
-    });
-
-    const role = response.data.role;
-
-    if (role === 'student') {
-      navigate('/SubjectDash');
-    } else if (role === 'faculty') {
-      navigate('/FacultyDash');
-    } else {
-      alert('Unknown user role');
+  const check = (e) => {
+    e.preventDefault();
+    if (!gmail || !password || mailErr || passErr) {
+      alert('Please fix the errors before submitting.');
+    }else{
+      //  navigate('/SubjectDash')
+      navigate('/FacultyDash')
     }
-  } catch (error) {
-    console.error('Login error:', error);
-    alert('Invalid credentials');
-  }
-};
+    // } else if(==="Student"){
+    //       navigate('/SubjectDash')
+    // }else if(role==="Faculty"){
+    //   navigate('/FacultyDash')
+    // }
+  };
+
+//   const check = async (e) => {
+//   e.preventDefault();
+//   if (!gmail || !password || mailErr || passErr) {
+//     alert('Please fix the errors before submitting.');
+//     return;
+//   }
+
+//   try {
+//     const response = await axios.post('http://127.0.0.1:8000/auth/login/', {
+//       email: gmail,
+//       password: password,
+//     });
+
+//     const role = response.data.role;
+
+//     if (role === 'student') {
+//       navigate('/SubjectDash');
+//     } else if (role === 'faculty') {
+//       navigate('/FacultyDash');
+//     } else {
+//       alert('Unknown user role');
+//     }
+//   } catch (error) {
+//     console.error('Login error:', error);
+//     alert('Invalid credentials');
+//   }
+// };
 
   return (
     <div className="container">

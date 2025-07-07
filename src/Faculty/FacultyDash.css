@@ -1,44 +1,56 @@
 .App {
   text-align: center;
   padding: 20px;
-  background-color: #9fe4ee;
+  background-image: url("/public/ima3.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 100vh;
 }
+
 .header-bar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* background-color: #9fe4ee; */
   padding: 15px 30px;
-  position: relative;
+  flex-wrap: wrap;
+  gap: 10px;
 }
+
 .title {
-  font-size: 24px;
+  font-size: 1.8rem;
   font-weight: bold;
   flex: 1;
   text-align: center;
+  color: black;
 }
+
 .profile-group {
   display: flex;
   align-items: center;
   gap: 10px;
+  flex-wrap: wrap;
 }
+
 .profile-icon {
   color: white;
   cursor: pointer;
 }
+
 .faculty-name {
   font-weight: bold;
-  font-size: 18px;
+  font-size: 1.2rem;
   color: #333;
 }
 
 .logout-button {
   padding: 6px 12px;
-  background-color: red;
+  background-color: black;
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: 10px;
   cursor: pointer;
+  height: 40px;
+  width: 90px;
 }
 
 .profile-dropdown {
@@ -52,7 +64,6 @@
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
   text-align: center;
   z-index: 100;
-  animation: fadeIn 0.3s ease-in-out;
 }
 
 .profile-dropdown h3 {
@@ -74,25 +85,82 @@
   text-align: left;
   border: 1px solid #ddd;
   border-radius: 8px;
-  background-color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.4);
+  transition: transform 0.2s ease;
+}
+
+.lists:hover {
+  transform: scale(1.01);
 }
 
 .lists h2 {
   font-size: 20px;
-  color: #333;
+  color: black;
+  cursor: pointer;
 }
 
 .lists ul {
   padding-left: 20px;
+  overflow-y: auto;
+  max-height: 220px;
 }
 
 .lists li {
-  margin-bottom: 8px;
+  margin-bottom: 20px;
   cursor: pointer;
   padding: 8px;
   border-radius: 6px;
+  background-color: rgba(255, 255, 255, 0.4);
+  transition: background-color 0.2s ease;
 }
 
 .lists li:hover {
-  background-color: #eef;
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+.lists ul::-webkit-scrollbar {
+  width: 8px;
+}
+
+.lists ul::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.lists ul::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 6px;
+}
+@media only screen and (max-width: 768px) {
+  .header-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .title {
+    font-size: 1.5rem;
+    text-align: left;
+  }
+
+  .profile-group {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .logout-button {
+    width: 100%;
+    font-size: 14px;
+  }
+}
+@media only screen and (max-width: 480px) {
+  .faculty-name {
+    display: none;
+  }
+
+  .profile-icon {
+    font-size: 24px;
+  }
+
+  .title {
+    font-size: 1.3rem;
+  }
 }

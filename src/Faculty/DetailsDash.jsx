@@ -115,9 +115,7 @@ const Approval = () => {
                         border: "none",
                         borderRadius: "4px",
                       }}
-                      onClick={() =>
-                        alert(`Viewing ${item} for ${student.roll}`)
-                      }
+                      onClick={()=>navigate('/CertificateView')}
                     >
                       View
                     </button>
