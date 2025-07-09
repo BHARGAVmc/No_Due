@@ -11,6 +11,9 @@ import SubjectDash from '../src/Student/SubjectDash';
 import CertificateView from '../src/Faculty/CertificateView';
 import SDetailsDash from '../src/Student/SDetailsDash';
 import DetailsDash from '../src/Faculty/DetailsDash';
+import StudentIn from '../src/Student/StudentIn';
+import FacultyIn from '../src/Faculty/FacultyIn';
+
 function App() {
   return (
         <div className="app-wrapper">
@@ -22,6 +25,8 @@ function App() {
         <Route path="/Signup" element={<Signup/>}/>
         <Route path="/Login" element={<Login/>}/>
         <Route path="/OtpPage" element={<OtpPage/>}/>
+        <Route path="/StudentIn" element={<StudentIn/>}/>
+        <Route path="/FacultyIn" element={<FacultyIn/>}/>
         <Route path="/ResetPassword" element={<ResetPassword/>}/>
         <Route path="/FacultyDash" element={<FacultyDash/>}/>
         <Route path="/SDetailsDash" element={<SDetailsDash/>}/>

@@ -136,7 +136,8 @@ function App() {
     return (
         <div className="sdetails-container">
             <div className="sdetails-header">
-                <button onClick={() => alert('You went back')}>←</button>
+                <button onClick={() => window.location.href = '/SubjectDash'}>←</button>
+
                 <span className="title">Subject 1</span>
                 <div className="sdetails-percentage-container">
                     <svg width="50" height="50" className="sdetails-progress-circle" style={{ pointerEvents: 'none' }}>
