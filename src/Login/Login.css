@@ -1,13 +1,14 @@
 .container {
   /* background-color: #9fe4ee; Changed from #23d7d7 to #9fe4ee */
   height: 100vh;
-    background-image: url("F:\ASAR\no_due\public\ima3.jpg");
+    background-image: url("C:\Users\VARA LAKSHMI\Desktop\ima3.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     /* opacity: 0.2; */
   display: flex;
   justify-content: center;
   align-items: center;
+  
 }
 
 .content-wrapper {
@@ -28,7 +29,7 @@
   border-radius:10px;
 }
 .signup-form {
-  background-color: #ffffff; /* ✅ Correct box background */
+  background-color:rgba(255, 255, 255, 0.5); /* ✅ Correct box background */
   padding: 30px 40px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);

@@ -1,0 +1,65 @@
+.student-form-container {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 25px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  background-color:rgba(255, 255, 255, 0.5);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+.student-form-heading {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #2c3e50;
+}
+.student-form-form {
+  display: flex;
+  flex-direction: column;
+}
+.student-form-label {
+  margin-bottom: 16px;
+  font-weight: bold;
+  color: #333;
+}
+.student-form-input,
+.student-form-select {
+  width: 100%;
+  padding: 10px 12px;
+  margin-top: 6px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+}
+.student-form-button {
+  margin-top: 20px;
+  padding: 10px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+.student-form-button:hover {
+  background-color: #0056b3;
+}
+@media (max-width: 600px) {
+  .student-form-container {
+    margin: 20px;
+    padding: 15px;
+  }
+
+  .student-form-heading {
+    font-size: 20px;
+  }
+
+  .student-form-input,
+  .student-form-select {
+    font-size: 13px;
+    padding: 8px 10px;
+  }
+
+  .student-form-button {
+    font-size: 14px }
+}

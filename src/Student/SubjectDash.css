@@ -7,7 +7,6 @@ html, body {
   font-family: Arial, sans-serif;
   
 }
-
 .App {
   height: 100vh; 
   padding: 20px;
@@ -16,7 +15,7 @@ html, body {
   flex-direction: column;
   box-sizing: border-box;
   overflow: hidden; 
-  background-image: url("F:\ASAR\no_due\public\ima3.jpg");
+  background-image: url("C:\Users\VARA LAKSHMI\Desktop\ima3.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   
@@ -70,7 +69,7 @@ html, body {
   margin: 10px 0;
   border: 1px solid #ccc;
   border-radius: 12px;
-  background-color: white;
+  background-color:rgba(255, 255, 255, 0.50);
   cursor: pointer;
   transition: background-color 0.3s;
 }

@@ -42,13 +42,23 @@ export default function Login() {
     if (!gmail || !password || mailErr || passErr) {
       alert('Please fix the errors before submitting.');
     }else{
-      //  navigate('/SubjectDash')
-      navigate('/FacultyDash')
+      //navigate('/SubjectDash')
+      //navigate('/FacultyDash')
+      //navigate('/FacultyIn')
+      navigate('/StudentIn')
+     
+      
     }
     // } else if(==="Student"){
     //       navigate('/SubjectDash')
     // }else if(role==="Faculty"){
     //   navigate('/FacultyDash')
+    // }
+    //else if(role==="Student"){
+    //      navigate('/StudentIn')
+    //  }
+   // else if(role==="Faculty"){
+    //   navigate('/FacultyIn')
     // }
   };
 

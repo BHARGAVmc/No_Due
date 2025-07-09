@@ -1,0 +1,110 @@
+.html,body{
+  overflow: auto;
+}
+.custom-branch-form-container {
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: 20px;
+  width: 400px;
+  margin: 50px auto;
+  font-family: Arial, sans-serif;
+  border-radius: 8px;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+}
+.custom-branch-title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.custom-branch-label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+.custom-branch-input,
+.custom-branch-select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  font-size: 16px;
+}
+.custom-branch-button-group {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+.custom-branch-button {
+  flex: 1;
+  padding: 10px;
+  background-color:royalblue;
+  border: 1px solid #999;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  color:white;
+}
+.custom-branch-button:hover {
+  background-color: #ccc;
+}
+
+@media (max-width: 768px) {
+  .custom-branch-form-container {
+    width: 80%;
+    padding: 15px;
+  }
+
+  .custom-branch-title {
+    font-size: 22px;
+  }
+
+  .custom-branch-button-group {
+    flex-direction: column;
+  }
+
+  .custom-branch-button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .custom-branch-form-container {
+    width: 90%;
+    padding: 15px;
+    margin: 30px auto;
+  }
+
+  .custom-branch-input,
+  .custom-branch-select {
+    font-size: 15px;
+  }
+
+  .custom-branch-button {
+    font-size: 15px;
+    padding: 8px;
+  }
+
+  .custom-branch-title {
+    font-size: 20px;
+  }
+}
+
+@media (min-width: 1025px) {
+  .custom-branch-form-container {
+    width: 500px;
+  }
+
+  .custom-branch-title {
+    font-size: 26px;
+  }
+
+  .custom-branch-input,
+  .custom-branch-select {
+    font-size: 18px;
+  }
+
+  .custom-branch-button {
+    font-size: 18px;
+  }
+}
