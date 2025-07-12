@@ -1,254 +1,218 @@
+/* Overall page container */
 body {
-    background-color: #9fe4ee;
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
+  background-color: #9fe4ee;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
 }
 
 .sdetails-container {
-    max-width: 600px;
-    margin: 20px auto;
-    padding: 20px;
-    background:rgba(255, 255, 255, 0.5);
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    width: 90%;
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 90%;
 }
 
+/* Header with back button, title, and percentage */
 .sdetails-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #e6f0fa;
-    padding: 10px;
-    border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #e6f0fa;
+  padding: 10px;
+  border-radius: 8px;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .sdetails-header button {
-    background-color: #23d7d7;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    padding: 5px 10px;
-    cursor: pointer;
-    font-size: 0.9rem;
+  background-color: #23d7d7;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-size: 0.9rem;
 }
 
-.sdetails-header .title {
-    font-size: 1.2rem;
-    font-weight: bold;
-    text-align: center;
-    flex: 1;
-    font-size: clamp(1rem, 4vw, 1.2rem);
+.faculty-name {
+  font-weight: bold;
+  font-size: 1rem;
 }
 
+/* Percentage circle */
 .sdetails-percentage-container {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .sdetails-progress-circle {
-    transform: rotate(-90deg);
-    width: 40px;
-    height: 40px;
+  width: 70px;
+  height: 70px;
 }
 
 .sdetails-progress-circle-bg {
-    fill: none;
-    stroke: #ddd;
-    stroke-width: 3;
+  fill: none;
+  stroke: #e0e0e0;
+  stroke-width: 8;
 }
 
 .sdetails-progress-circle-fill {
-    fill: none;
-    stroke: #007BFF;
-    stroke-width: 3;
-    stroke-linecap: round;
-    transition: stroke-dasharray 0.3s ease;
+  fill: none;
+  stroke: #00bcd4;
+  stroke-width: 8;
+  stroke-linecap: round;
+  transition: stroke-dasharray 0.3s ease;
+  transform: rotate(-90deg);
+  transform-origin: center;
 }
 
-.sdetails-progress-circle-text {
-    fill: #666;
-    font-size: 10px;
-    font-family: Arial, sans-serif;
+.sdetails-progress-text {
+  font-size: 28px;
+  font-weight: bold;
+  fill: #000;
+  text-anchor: middle;
+  dominant-baseline: middle;
+  font-family: 'Arial', sans-serif;
 }
 
+/* Individual requirement item */
 .sdetails-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 1rem;
-    padding: 10px;
-    background-color: #f9f9f9;
-    border-radius: 6px;
-    font-size: clamp(0.9rem, 3vw, 1rem);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1rem;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 6px;
 }
 
 .sdetails-item-content {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    width: 100%;
-}
-
-.sdetails-checkbox {
-    width: 18px;
-    height: 18px;
-    border: 2px solid #007BFF;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    border-radius: 4px;
-    background-color: transparent;
-}
-
-.sdetails-checkbox.checked {
-    background-color: transparent;
-}
-
-.sdetails-checkbox.checked::after {
-    content: '';
-}
-
-.sdetails-checkbox.disabled {
-    pointer-events: none;
-    opacity: 1;
-    cursor: default;
-}
-
-.sdetails-sub-items {
-    margin-left: 30px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.sdetails-sub-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #f1f1f1;
-    padding: 10px;
-    border-radius: 6px;
-    font-size: clamp(0.9rem, 3vw, 1rem);
-}
-
-.sdetails-sub-item-content {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    justify-content: flex-start;
-    width: 100%;
-}
-
-.sdetails-upload-button {
-    padding: 5px 12px;
-    background-color: #23d7d7;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    max-width: 150px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    font-size: 0.9rem;
-    transition: background-color 0.3s ease;
-}
-
-.sdetails-upload-button:hover {
-    background-color: #1cbaba;
-}
-
-.sdetails-delete-button {
-    background: transparent;
-    border: none;
-    color: #dc3545;
-    cursor: pointer;
-    padding: 5px;
-    display: flex;
-    align-items: center;
-    transition: color 0.3s ease;
-}
-
-.sdetails-delete-button:hover {
-    color: #c82333;
-}
-
-.sdetails-sub-item-content > div {
-    display: flex;
-    align-items: center;
-    gap: 5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
 }
 
 .sdetails-clickable {
-    cursor: pointer;
-    text-decoration: none;
-    pointer-events: auto;
-    padding: 4px 6px;
-    display: inline-block;
-    transition: text-decoration 0.2s ease;
+  cursor: pointer;
+  padding: 4px 6px;
 }
 
 .sdetails-clickable:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .sdetails-status {
-    margin-left: 5px;
-    color: #28a745;
+  color: #28a745;
 }
 
+/* Checkbox styling */
+.sdetails-checkbox {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #007BFF;
+  border-radius: 4px;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.sdetails-checkbox.checked {
+  background-color: #007BFF;
+}
+
+.sdetails-checkbox.checked.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Sub-items section */
+.sdetails-sub-items {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-left: 20px;
+}
+
+.sdetails-sub-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f1f1f1;
+  padding: 10px;
+  border-radius: 6px;
+}
+
+.sdetails-sub-item-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+/* Upload/Delete buttons */
+.sdetails-upload-button {
+  padding: 6px 12px;
+  background-color: #23d7d7;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.9rem;
+}
+
+.sdetails-upload-button:hover {
+  background-color: #1cbaba;
+}
+
+.sdetails-delete-button {
+  background: transparent;
+  border: none;
+  color: #dc3545;
+  cursor: pointer;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.sdetails-delete-button:hover {
+  color: #c82333;
+}
+
+/* Responsive layout */
 @media screen and (max-width: 600px) {
-    .sdetails-header {
-        flex-direction: column;
-        text-align: center;
-    }
+  .sdetails-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
-    .sdetails-item,
-    .sdetails-sub-item {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-    }
+  .sdetails-item,
+  .sdetails-sub-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
-    .sdetails-item-content,
-    .sdetails-sub-item-content {
-        flex-direction: row;
-        flex-wrap: nowrap;
-        justify-content: space-between;
-        width: 100%;
-    }
+  .sdetails-sub-items {
+    margin-left: 0;
+  }
 
-    .sdetails-sub-items {
-        margin-left: 0;
-    }
+  .sdetails-progress-circle {
+    width: 90px;
+    height: 90px;
+  }
 
-    .sdetails-upload-button {
-        max-width: 100%;
-    }
-}
-
-@media screen and (max-width: 400px) {
-    .sdetails-header .title {
-        font-size: 1rem;
-    }
-
-    .sdetails-progress-circle {
-        width: 30px;
-        height: 30px;
-    }
-
-    .sdetails-progress-circle-bg,
-    .sdetails-progress-circle-fill {
-        stroke-width: 2;
-    }
-
-    .sdetails-progress-circle-text {
-        font-size: 8px;
-    }
+  .sdetails-progress-text {
+    font-size: 20px;
+  }
 }

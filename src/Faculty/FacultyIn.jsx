@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
+import { useLocation, useNavigate} from 'react-router-dom';
+import axios from 'axios';
 import './FacultyIn.css';
 
 const BranchForm = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+    const { email, password } = location.state || {};
   const [formData, setFormData] = useState({
     branch: '',
     year: '',
@@ -9,41 +14,64 @@ const BranchForm = () => {
     section: '',
     courseCode: '',
     subject: '',
-    facultyName: ''
+    facultyName: '',
   });
 
-  const years = ['1st Year', '2nd Year', '3rd Year', '4th Year'];
-  const semesters = ['I', 'II'];
-  const sections = Array.from({ length: 11 }, (_, i) => String.fromCharCode(65 + i)); // A to K
+  const years = ['1', '2', '3', '4'];
+  const semesters = ['1', '2'];
+  const sections = Array.from({ length: 11 }, (_, i) => String.fromCharCode(65 + i)); 
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     const values = Object.values(formData);
     const allFieldsFilled = values.every(value => value.trim() !== "");
 
     if (!allFieldsFilled) {
-      alert("⚠️ Please fill in all the fields before submitting.");
+      alert("⚠ Please fill in all the fields before submitting.");
       return;
     }
 
-    alert("✅ Successfully submitted");
-    window.location.href='/FacultyDash';
+    try {
+      const payload = {
+        email:email, 
+        fname: formData.facultyName,
+        branch: formData.branch,
+        year: formData.year,
+        semester: formData.sem,
+        section: formData.section,
+        subject_code: formData.courseCode,
+        subject_name: formData.subject,
+      };
+
+      const response = await axios.post('http://localhost:8000/f_input/save-faculty-subject/', payload);
+
+      if (response.status === 200) {
+        alert("✅ Successfully submitted");
+        window.location.href = '/FacultyDash';
+      }
+    } catch (error) {
+      console.error(error);
+      alert("❌ Submission failed: " + (error.response?.data?.error || "Unknown error"));
+    }
   };
 
   const handleBack = () => {
-    window.location.href = '/FacultyDash';
+    navigate("/FacultyDash", {
+              replace: true, // avoids stacking pages
+              state: {  email, password},
+            })
   };
 
   return (
     <div className="custom-branch-form-container">
-      {/* 🔙 Back Arrow */}
-      <div onClick={handleBack} style={{ cursor: 'pointer', fontSize: '24px', marginBottom: '10px' }}>
-        ← Back
-      </div>
+      <div className="back-arrow-box" onClick={handleBack}>
+    ←
+  </div>
 
       <h2 className="custom-branch-title">Branch selection</h2>
       <form className="custom-branch-form" onSubmit={handleSubmit}>
@@ -143,3 +171,4 @@ const BranchForm = () => {
 };
 
 export default BranchForm;
+

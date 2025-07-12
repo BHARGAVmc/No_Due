@@ -1,17 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from "react-router-dom";
 import { FaUserCircle } from 'react-icons/fa';
+import axios from 'axios';
 import './SubjectDash.css';
 
-const subjects = [
-  { id: 1, name: "Subject 1", completed: 3, total: 5 },
-  { id: 2, name: "Subject 2", completed: 4, total: 5 },
-  { id: 3, name: "Subject 3", completed: 2, total: 5 },
-  { id: 4, name: "Subject 4", completed: 1, total: 5 }
-];
 
 const CircularProgress = ({ percentage }) => {
   const radius = 15.9155;
-  const dash = (percentage * 100) / 100;
+  const dash = percentage;
+
   return (
     <svg viewBox="0 0 36 36" className="circular-chart">
       <path
@@ -34,51 +31,76 @@ const CircularProgress = ({ percentage }) => {
   );
 };
 
-const SubjectCard = ({ id, name, completed, total }) => {
-  const percentage = Math.round((completed / total) * 100);
+
+const SubjectCard = ({ subject }) => {
+  const navigate = useNavigate();
+
+  const total = subject.requirements.length;
+  const completed = subject.requirements.filter(r => r.is_completed).length;
+  const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
 
   const handleClick = () => {
-    // Navigate to SDetailsDash page
-    window.location.href = 'SDetailsDash';  // You can also use SDetailsDash.html if it's an HTML file
+    navigate('/SDetailsDash', { state: { subject } });
   };
 
   return (
     <div className="card" onClick={handleClick}>
-      <div className="card-left">{name}</div>
+      <div className="card-left">
+        <p>{subject.subject_name.charAt(0).toUpperCase() + subject.subject_name.slice(1)}    - {subject.faculty_name.charAt(0).toUpperCase() + subject.faculty_name.slice(1)}</p>
+      </div>
       <div className="card-right">
-        <span className="label">Percentage</span>
+        {/* <span className="label">Completion</span> */}
         <CircularProgress percentage={percentage} />
       </div>
     </div>
   );
 };
 
-const Home = () => {
+
+const Home = ({ subjects }) => {
   return (
     <div className="home-container">
       <h1>List of Subjects</h1>
-      {subjects.map(subject => (
-        <SubjectCard
-          key={subject.id}
-          id={subject.id}
-          name={subject.name}
-          completed={subject.completed}
-          total={subject.total}
-        />
+      {subjects.map((subj, index) => (
+        <SubjectCard key={index} subject={subj} />
       ))}
     </div>
   );
 };
 
+
 const App = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { email, password } = location.state || {};
+
   const [showProfile, setShowProfile] = useState(false);
-  const name = "U. Varalakshmi";
-  const rollNo = "21BCE13360";
+  const [student, setStudent] = useState(null);
+  const [subjects, setSubjects] = useState([]);
+
+  
+  useEffect(() => {
+    if (email && password) {
+      axios.post("http://127.0.0.1:8000/details/subjects/", {
+        email: email,
+        password: password
+      }).then((res) => {
+        setStudent(res.data.student);
+        setSubjects(res.data.subjects);
+      }).catch((err) => {
+        console.error("API error:", err);
+        alert("Failed to fetch subject details.");
+      });
+    }
+  }, [email, password]);
 
   const handleLogout = () => {
     alert("You have been logged out.");
     setShowProfile(false);
+    navigate('/');
   };
+
+  const rollNo = student?.roll_no || "Loading...";
 
   return (
     <div className="App">
@@ -92,13 +114,13 @@ const App = () => {
 
       {showProfile && (
         <div className="profile-box">
-          <p><strong>Name:</strong> {name}</p>
+          <p><strong>Email:</strong> {email}</p>
           <p><strong>Roll No:</strong> {rollNo}</p>
           <button className="logout-btn" onClick={handleLogout}>Logout</button>
         </div>
       )}
 
-      <Home />
+      <Home subjects={subjects} />
     </div>
   );
 };

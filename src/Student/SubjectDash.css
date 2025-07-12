@@ -15,7 +15,7 @@ html, body {
   flex-direction: column;
   box-sizing: border-box;
   overflow: hidden; 
-  background-image: url("C:\Users\VARA LAKSHMI\Desktop\ima3.jpg");
+  background-image: url("/public/ima3.jpg ");
   background-repeat: no-repeat;
   background-size: cover;
   
@@ -117,7 +117,8 @@ html, body {
 }
 
 .percentage-text {
-  font-size: 0.3em;
+  fill: #000;            
+  font-size: 10px;        
+  font-weight: bold;
   text-anchor: middle;
-  fill: black;
 }

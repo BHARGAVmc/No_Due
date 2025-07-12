@@ -4,23 +4,27 @@
   padding: 25px;
   border: 1px solid #ccc;
   border-radius: 12px;
-  background-color:rgba(255, 255, 255, 0.5);
+  background-color:rgba(255,255, 255, 0.5);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
+
 .student-form-heading {
   text-align: center;
   margin-bottom: 20px;
   color: #2c3e50;
 }
+
 .student-form-form {
   display: flex;
   flex-direction: column;
 }
+
 .student-form-label {
   margin-bottom: 16px;
   font-weight: bold;
   color: #333;
 }
+
 .student-form-input,
 .student-form-select {
   width: 100%;
@@ -30,20 +34,37 @@
   border-radius: 8px;
   font-size: 14px;
 }
-.student-form-button {
+
+.student-form-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-top: 20px;
+}
+
+.student-form-submit-button {
+  width: 25%;
   padding: 10px;
-  font-size: 16px;
-  background-color: #007bff;
-  color: #fff;
+  background-color: #23d7d7;
+  color: white;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: background 0.3s ease;
 }
-.student-form-button:hover {
-  background-color: #0056b3;
+
+.student-form-back-button {
+  padding: 10px;
+  background-color: #555;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
 }
+
+.student-form-submit-button:hover {
+  background-color: #1bbaba;
+}
+
 @media (max-width: 600px) {
   .student-form-container {
     margin: 20px;
@@ -60,6 +81,8 @@
     padding: 8px 10px;
   }
 
-  .student-form-button {
-    font-size: 14px }
+  .student-form-submit-button {
+    font-size: 14px;
+    width: 40%;
+  }
 }

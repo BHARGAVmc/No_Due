@@ -1,39 +1,58 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import axios from "axios";
 import "./StudentIn.css";
 
 const StudentDetailsForm = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { email, password } = location.state || {};
+
   const [formData, setFormData] = useState({
-    roll_number: "",
+    roll_no: "",
     branch: "",
     year: "",
-    sem: "",
+    semester: "", 
     section: ""
   });
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [e.target.name]: e.target.value
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { roll_number, branch, year, sem, section } = formData;
+    try {
+      const payload = {
+        email: email,
+        password: password,
+        roll_no: formData.roll_no,
+        branch: formData.branch,
+        year: formData.year,
+        semester: formData.semester,  
+        section: formData.section
+      };
 
-    // Validate fields
-    if (!roll_number.trim() || !branch || !year || !sem || !section) {
-      alert("⚠️ Please fill in all the fields.");
-      return;
+      const response = await axios.post("http://127.0.0.1:8000/student/update/", payload);
+
+      if (response.status === 200 || response.status === 201) {
+        alert("Student profile updated successfully");
+        navigate("/SubjectDash");
+      } else {
+        alert("Something went wrong");
+      }
+    } catch (error) {
+      console.error("Update error:", error);
+      alert("Failed to update student details");
     }
+  };
 
-    // Show success and navigate
-    alert("✅ Successfully submitted!");
-    navigate("/subjectdash");
+  const handleBack = () => {
+    navigate(-1);
   };
 
   return (
@@ -44,13 +63,12 @@ const StudentDetailsForm = () => {
           Roll Number:
           <input
             type="text"
-            name="roll_number"
-            value={formData.roll_number}
-            onChange={handleChange}
-            maxLength={10}
+            name="roll_no"
+            maxLength="10"
             required
             className="student-form-input"
-            placeholder="Enter 10-digit Roll Number"
+            value={formData.roll_no}
+            onChange={handleChange}
           />
         </label>
 
@@ -58,23 +76,21 @@ const StudentDetailsForm = () => {
           Branch:
           <select
             name="branch"
-            value={formData.branch}
-            onChange={handleChange}
             required
             className="student-form-select"
+            value={formData.branch}
+            onChange={handleChange}
           >
-            <option value="">-- Select Branch --</option>
-            <option value="CAI">CAI</option>
-            <option value="CIVIL">CIVIL</option>
-            <option value="CSC">CSC</option>
-            <option value="CSD">CSD</option>
+            <option value="">Select Branch</option>
             <option value="CSM">CSM</option>
-            <option value="CSN">CSN</option>
             <option value="CSE">CSE</option>
-            <option value="CST">CST</option>
-            <option value="ECE">ECE</option>
-            <option value="EEE">EEE</option>
+            <option value="CSN">CSN</option>
+            <option value="CSD">CSD</option>
+            <option value="CIV">CIV</option>
             <option value="MECH">MECH</option>
+            <option value="CST">CST</option>
+            <option value="CSC">CSC</option>
+            <option value="CAI">CAI</option>
           </select>
         </label>
 
@@ -82,31 +98,31 @@ const StudentDetailsForm = () => {
           Year:
           <select
             name="year"
-            value={formData.year}
-            onChange={handleChange}
             required
             className="student-form-select"
+            value={formData.year}
+            onChange={handleChange}
           >
-            <option value="">-- Select Year --</option>
-            <option value="1">1st Year</option>
-            <option value="2">2nd Year</option>
-            <option value="3">3rd Year</option>
-            <option value="4">4th Year</option>
+            <option value="">Select Year</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
           </select>
         </label>
 
         <label className="student-form-label">
           Semester:
           <select
-            name="sem"
-            value={formData.sem}
-            onChange={handleChange}
+            name="semester"  
             required
             className="student-form-select"
+            value={formData.semester}
+            onChange={handleChange}
           >
-            <option value="">-- Select Semester --</option>
-            <option value="I">I</option>
-            <option value="II">II</option>
+            <option value="">Select Semester</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
           </select>
         </label>
 
@@ -114,12 +130,12 @@ const StudentDetailsForm = () => {
           Section:
           <select
             name="section"
-            value={formData.section}
-            onChange={handleChange}
             required
             className="student-form-select"
+            value={formData.section}
+            onChange={handleChange}
           >
-            <option value="">-- Select Section --</option>
+            <option value="">Select Section</option>
             <option value="A">A</option>
             <option value="B">B</option>
             <option value="C">C</option>
@@ -130,14 +146,26 @@ const StudentDetailsForm = () => {
             <option value="H">H</option>
             <option value="I">I</option>
             <option value="J">J</option>
+            <option value="K">K</option>
+            <option value="L">L</option>
+            <option value="M">M</option>
+            <option value="N">N</option>
+            <option value="O">O</option>
+            <option value="P">P</option>
           </select>
         </label>
 
-        <button type="submit" className="student-form-button">
-          Submit
-        </button>
+        <div className="student-form-buttons">
+          <button type="button" onClick={handleBack} className="student-form-back-button">
+            Back
+          </button>
+          <button type="submit" className="student-form-submit-button">
+            Submit
+          </button>
+        </div>
       </form>
     </div>
   );
 };
+
 export default StudentDetailsForm;

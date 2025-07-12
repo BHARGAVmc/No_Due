@@ -33,6 +33,8 @@
   display: flex;
   justify-content: space-between;
   gap: 10px;
+  width: 130px;
+  margin: 0 auto;
 }
 .custom-branch-button {
   flex: 1;
@@ -104,7 +106,32 @@
     font-size: 18px;
   }
 
-  .custom-branch-button {
-    font-size: 18px;
-  }
+ .custom-branch-button {
+  flex: 1;
+  padding: 10px;
+  background-color:#23d7d7;
+  border: 1px solid #999;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  color:white;
+}
+}
+.back-arrow-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: #e0e0e0;
+  border-radius: 8px;
+  font-size: 24px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s;
+}
+
+.back-arrow-box:hover {
+  background-color: #d0d0d0;
 }

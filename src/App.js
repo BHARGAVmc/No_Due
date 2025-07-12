@@ -17,7 +17,6 @@ import FacultyIn from '../src/Faculty/FacultyIn';
 function App() {
   return (
         <div className="app-wrapper">
-      {/* ✅ Global blurred background */}
       <div className="global-bg"></div>
      <BrowserRouter>
       <Routes>
@@ -29,7 +28,9 @@ function App() {
         <Route path="/FacultyIn" element={<FacultyIn/>}/>
         <Route path="/ResetPassword" element={<ResetPassword/>}/>
         <Route path="/FacultyDash" element={<FacultyDash/>}/>
+        <Route path="/FacultyIn" element={<FacultyIn/>}/>
         <Route path="/SDetailsDash" element={<SDetailsDash/>}/>
+        <Route path="/FacultyDash" element={<FacultyDash/>}/>
         <Route path="/SubjectDash" element={<SubjectDash/>}/>
         <Route path="/DetailsDash" element={<DetailsDash/>}/>
         <Route path="/ResetPassword" element={<ResetPassword/>}/>

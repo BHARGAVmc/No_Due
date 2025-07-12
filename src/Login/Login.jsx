@@ -37,58 +37,63 @@ export default function Login() {
     }
   };
 
-  const check = (e) => {
-    e.preventDefault();
-    if (!gmail || !password || mailErr || passErr) {
-      alert('Please fix the errors before submitting.');
-    }else{
-      //navigate('/SubjectDash')
-      //navigate('/FacultyDash')
-      //navigate('/FacultyIn')
-      navigate('/StudentIn')
+  // const check = (e) => {
+  //   e.preventDefault();
+  //   if (!gmail || !password || mailErr || passErr) {
+  //     alert('Please fix the errors before submitting.');
+  //   }else{
+  //     //navigate('/SubjectDash')
+  //     //navigate('/FacultyDash')
+  //     //navigate('/FacultyIn')
+  //     navigate('/StudentIn')
      
       
+  //   }
+  //   // } else if(==="Student"){
+  //   //       navigate('/SubjectDash')
+  //   // }else if(role==="Faculty"){
+  //   //   navigate('/FacultyDash')
+  //   // }
+  //   //else if(role==="Student"){
+  //   //      navigate('/StudentIn')
+  //   //  }
+  //  // else if(role==="Faculty"){
+  //   //   navigate('/FacultyIn')
+  //   // }
+  // };
+
+  const check = async (e) => {
+  e.preventDefault();
+  if (!gmail || !password || mailErr || passErr) {
+    alert('Please fix the errors before submitting.');
+    return;
+  }
+
+  try {
+    const response = await axios.post('http://127.0.0.1:8000/auth/login/', {
+      email: gmail,
+      password: password,
+    });
+
+    const role = response.data.user.role;
+    const profileComplete = response.data.profile_complete;
+
+    if (role === 'student') {
+      if(!profileComplete){
+      navigate('/StudentIn', {state: { email: gmail, password: password }});
+      }else{
+        navigate('/SubjectDash', {state: { email: gmail, password: password }})
+      }
+    } else if (role === 'faculty') {
+      navigate('/FacultyDash', {state: { email: gmail, password: password }});
+    } else {
+      alert('Unknown user role');
     }
-    // } else if(==="Student"){
-    //       navigate('/SubjectDash')
-    // }else if(role==="Faculty"){
-    //   navigate('/FacultyDash')
-    // }
-    //else if(role==="Student"){
-    //      navigate('/StudentIn')
-    //  }
-   // else if(role==="Faculty"){
-    //   navigate('/FacultyIn')
-    // }
-  };
-
-//   const check = async (e) => {
-//   e.preventDefault();
-//   if (!gmail || !password || mailErr || passErr) {
-//     alert('Please fix the errors before submitting.');
-//     return;
-//   }
-
-//   try {
-//     const response = await axios.post('http://127.0.0.1:8000/auth/login/', {
-//       email: gmail,
-//       password: password,
-//     });
-
-//     const role = response.data.role;
-
-//     if (role === 'student') {
-//       navigate('/SubjectDash');
-//     } else if (role === 'faculty') {
-//       navigate('/FacultyDash');
-//     } else {
-//       alert('Unknown user role');
-//     }
-//   } catch (error) {
-//     console.error('Login error:', error);
-//     alert('Invalid credentials');
-//   }
-// };
+  } catch (error) {
+    console.error('Login error:', error);
+    alert('Invalid credentials');
+  }
+};
 
   return (
     <div className="container">
