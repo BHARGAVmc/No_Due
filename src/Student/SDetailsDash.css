@@ -216,3 +216,40 @@ body {
     font-size: 20px;
   }
 }
+
+.dot {
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-left: 5px;
+}
+.green {
+  background-color: green;
+}
+.red {
+  background-color: red;
+}
+.remark-link {
+  font-size: 12px;
+  color: blue;
+  margin-left: 8px;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.sdetails-remark-popup {
+  margin-top: 4px;
+  padding: 5px;
+  background: #f2f2f2;
+  border-left: 4px solid #007bff;
+  font-size: 13px;
+}
+.sdetails-copy-indicators {
+  display: inline-flex;
+  gap: 4px;
+  margin-left: 8px;
+}
+.sdetails-checkbox.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}

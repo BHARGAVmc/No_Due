@@ -185,3 +185,18 @@ h1 {
   border: 1px solid #ccc;
 }
 
+.cert-options {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: 10px;
+}
+
+.certificate-button {
+  background-color: #4caf50;
+  color: white;
+  padding: 5px 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}

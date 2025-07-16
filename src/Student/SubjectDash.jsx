@@ -40,7 +40,8 @@ const SubjectCard = ({ subject }) => {
   const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
 
   const handleClick = () => {
-    navigate('/SDetailsDash', { state: { subject } });
+    console.log("🧾 Passing Subject to SDetailsDash:", subject);
+    navigate('/SDetailsDash', { state: { subject  } });
   };
 
   return (
@@ -80,19 +81,32 @@ const App = () => {
 
   
   useEffect(() => {
-    if (email && password) {
-      axios.post("http://127.0.0.1:8000/details/subjects/", {
-        email: email,
-        password: password
-      }).then((res) => {
-        setStudent(res.data.student);
-        setSubjects(res.data.subjects);
-      }).catch((err) => {
-        console.error("API error:", err);
-        alert("Failed to fetch subject details.");
-      });
-    }
-  }, [email, password]);
+  if (email && password) {
+    axios.post("http://127.0.0.1:8000/details/subjects/", {
+      email: email,
+      password: password
+    })
+    .then((res) => {
+      console.log("🚀 Full API Response:", res.data);
+
+      const studentRollNo = res.data.student.roll_no;
+
+      // ✅ Inject student_roll_no into each subject
+      const subjectsWithRoll = res.data.subjects.map(subject => ({
+        ...subject,
+        student_roll_no: studentRollNo
+      }));
+
+      setStudent(res.data.student);
+      setSubjects(subjectsWithRoll);
+    })
+    .catch((err) => {
+      console.error("API error:", err);
+      alert("Failed to fetch subject details.");
+    });
+  }
+}, [email, password]);
+
 
   const handleLogout = () => {
     alert("You have been logged out.");

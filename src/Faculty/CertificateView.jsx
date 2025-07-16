@@ -1,34 +1,66 @@
-import React from 'react';
-import { useNavigate } from "react-router-dom";
-import './CertificateView.css';
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
-function CertificateView({ onBack }) {
-  const navigate = useNavigate();
-  const handleApprove = () => alert("✅ Certificate Approved");
-  const handleDeny = () => alert("❌ Certificate Denied");
+const CertificateView = () => {
+  const location = useLocation();
+  const navigate = useNavigate(); // ⬅ Import and use this
+  const { roll_no, subject_code, requirement_type } = location.state || {};
+  const [fileUrl, setFileUrl] = useState("");
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    let url = null;
+
+    const fetchCertificate = async () => {
+      try {
+        const res = await fetch(
+          `http://127.0.0.1:8000/fdetails/get-certificate/?roll_no=${roll_no}&subject_code=${subject_code}&requirement_type=${requirement_type}`
+        );
+
+        if (!res.ok) throw new Error("Failed to fetch file");
+
+        const blob = await res.blob();
+        url = URL.createObjectURL(blob);
+        setFileUrl(url);
+      } catch (err) {
+        console.error("Error fetching file", err);
+        setError("Failed to load certificate.");
+      }
+    };
+
+    if (roll_no && subject_code && requirement_type) {
+      fetchCertificate();
+    }
+
+    return () => {
+      if (url) URL.revokeObjectURL(url);
+    };
+  }, [roll_no, subject_code, requirement_type]);
 
   return (
-    <div className="certificate-wrapper">
-      {/* Top-left back button */}
-      <button className="back-btn" onClick={()=>navigate('/DetailsDash')}>←</button>
-
-      <h1 className="heading">Certificate</h1>
-
-      {/* Full-width image view */}
-      <div className="image-container">
-        <img
-          src="https://i.ibb.co/Hqpkxwd/tha2.jpg"  // Replace with your actual image URL
-          alt="Certificate"
-          className="certificate-image"
-        />
-      </div>
-
-      <div className="action-buttons">
-        <button className="approve-btn" onClick={handleApprove}>Approve</button>
-        <button className="deny-btn" onClick={handleDeny}>Deny</button>
-      </div>
+    <div style={{ padding: "20px" }}>
+      <button onClick={() => navigate(-1)} style={{ marginBottom: "15px" }}>
+        ⬅ Back
+      </button>
+      <h2>Certificate Viewer</h2>
+      {error && <p style={{ color: "red" }}>{error}</p>}
+      {fileUrl ? (
+        <>
+          <iframe
+            src={fileUrl}
+            width="100%"
+            height="600px"
+            title="Certificate Preview"
+          />
+          <a href={fileUrl} download={`${roll_no}_${requirement_type}.pdf`}>
+            <button style={{ marginTop: "10px" }}>Download Certificate</button>
+          </a>
+        </>
+      ) : (
+        !error && <p>Loading certificate...</p>
+      )}
     </div>
   );
-}
+};
 
 export default CertificateView;

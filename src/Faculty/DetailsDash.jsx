@@ -287,6 +287,9 @@ const Approval = () => {
   const [selectedRoll, setSelectedRoll] = useState(null);
   const [otherInput, setOtherInput] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
+  const [softRequired, setSoftRequired] = useState(false);
+const [hardRequired, setHardRequired] = useState(false);
+
 
   useEffect(() => {
     const fetchStudentData = async () => {
@@ -306,11 +309,16 @@ const Approval = () => {
           .sort()
           .map((roll) => {
             const studentRequirements = requirements.filter(req => req.roll_no === roll);
-            return {
-              roll,
-              remarks: studentRequirements[0]?.remarks || "",
-              requirements: studentRequirements
-            };
+         return {
+            roll,
+            remarks: studentRequirements[0]?.remarks || "",
+            requirements: studentRequirements.map(req => ({
+              ...req,
+              soft_copy_required: req.soft_copy_required || false,
+              hard_copy_required: req.hard_copy_required || false
+            }))
+          };
+
           });
 
         setStudents(formattedStudents);
@@ -330,29 +338,56 @@ const Approval = () => {
     setSelectedRoll(selectedRoll === roll ? null : roll);
   };
 
+  // const handleAddOther = async () => {
+  //   const trimmed = otherInput.trim();
+  //   if (!trimmed || dropdownItems.includes(trimmed)) return;
+
+  //   try {
+  //     await axios.post("http://127.0.0.1:8000/fdetails/add-requirement/", {
+  //       email,
+  //       branch: department,
+  //       year: years,
+  //       semester: "1",
+  //       section,
+  //       requirement_type: trimmed,
+  //       remarks: "Not Submitted"
+  //     });
+
+  //     setOtherInput("");
+  //     setShowDropdown(false);
+  //     window.location.reload();
+
+  //   } catch (error) {
+  //     console.error("Error adding requirement:", error);
+  //   }
+  // };
   const handleAddOther = async () => {
-    const trimmed = otherInput.trim();
-    if (!trimmed || dropdownItems.includes(trimmed)) return;
+  const trimmed = otherInput.trim();
+  if (!trimmed || dropdownItems.includes(trimmed)) return;
 
-    try {
-      await axios.post("http://127.0.0.1:8000/fdetails/add-requirement/", {
-        email,
-        branch: department,
-        year: years,
-        semester: "1",
-        section,
-        requirement_type: trimmed,
-        remarks: "Not Submitted"
-      });
+  try {
+    await axios.post("http://127.0.0.1:8000/fdetails/add-requirement/", {
+      email,
+      branch: department,
+      year: years,
+      semester: "1",
+      section,
+      requirement_type: trimmed,
+      soft_copy_required: softRequired,
+      hard_copy_required: hardRequired,
+      remarks: "Not Submitted"
+    });
 
-      setOtherInput("");
-      setShowDropdown(false);
-      window.location.reload();
+    setOtherInput("");
+    setSoftRequired(false);
+    setHardRequired(false);
+    setShowDropdown(false);
+    window.location.reload();
+  } catch (error) {
+    console.error("Error adding requirement:", error);
+  }
+};
 
-    } catch (error) {
-      console.error("Error adding requirement:", error);
-    }
-  };
 
   const handleDeleteItem = async (itemToDelete) => {
   try {
@@ -447,15 +482,36 @@ const Approval = () => {
             </div>
           ))}
 
-          <input
+           <input
             type="text"
-            placeholder="Add Others"
+            placeholder="Add Requirement"
             value={otherInput}
             onChange={(e) => setOtherInput(e.target.value)}
           />
+
+          <div className="copy-options">
+            <label>
+              <input
+                type="checkbox"
+                checked={softRequired}
+                onChange={(e) => setSoftRequired(e.target.checked)}
+              />
+              Soft Copy Required
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                checked={hardRequired}
+                onChange={(e) => setHardRequired(e.target.checked)}
+              />
+              Hard Copy Required
+            </label>
+          </div>
+
           <button className="add-button" onClick={handleAddOther}>
             Add
           </button>
+
         </div>
       )}
 
@@ -489,10 +545,84 @@ const Approval = () => {
                     {item}
                   </label>
                   {item.toLowerCase().includes("certificate") && (
-                    <button className="certificate-button" onClick={() => navigate('/CertificateView')}>
+                  <div className="cert-options">
+                    <button
+                      className="certificate-button"
+                      onClick={() =>
+                        navigate("/CertificateView", {
+                          state: {
+                            roll_no: student.roll,
+                            subject_code: student.requirements.find(r => r.requirement_type === item)?.subject_code,
+                            requirement_type: item
+                          }
+                        })
+                      }
+                    >
                       View
                     </button>
-                  )}
+
+                    {/* Soft copy toggle */}
+                    {/* <label>
+                      <input
+                        type="checkbox"
+                        checked={
+                          student.requirements.find(r => r.requirement_type === item)?.soft_copy_required || false
+                        }
+                        onChange={async (e) => {
+                          const isChecked = e.target.checked;
+                          const subject_code = student.requirements.find(r => r.requirement_type === item)?.subject_code;
+                       await axios.post("http://127.0.0.1:8000/fdetails/update-certificate-type/", {
+                        email,
+                        subject_code,
+                        requirement_type: item,
+                        soft_copy_required: isChecked,
+                        hard_copy_required: student.requirements.find(r => r.requirement_type === item)?.hard_copy_required || false
+                      });
+
+                      // ✅ Update state instead of reloading the entire page
+                      const updatedStudents = [...students];
+                      const reqIndex = updatedStudents[index].requirements.findIndex(r => r.requirement_type === item);
+                      if (reqIndex >= 0) {
+                        updatedStudents[index].requirements[reqIndex].soft_copy_required = isChecked;
+                      }
+                      setStudents(updatedStudents);
+
+                        }}
+                      />
+                      Soft
+                    </label> */}
+
+                    {/* Hard copy toggle */}
+                    {/* <label>
+                      <input
+                        type="checkbox"
+                        checked={
+                          student.requirements.find(r => r.requirement_type === item)?.hard_copy_required || false
+                        }
+                        onChange={async (e) => {
+                          const isChecked = e.target.checked;
+                          const subject_code = student.requirements.find(r => r.requirement_type === item)?.subject_code;
+                      await axios.post("http://127.0.0.1:8000/fdetails/update-certificate-type/", {
+                        email,
+                        subject_code,
+                        requirement_type: item,
+                        soft_copy_required: student.requirements.find(r => r.requirement_type === item)?.soft_copy_required || false,
+                        hard_copy_required: isChecked
+                      });
+
+                      const updatedStudents = [...students];
+                      const reqIndex = updatedStudents[index].requirements.findIndex(r => r.requirement_type === item);
+                      if (reqIndex >= 0) {
+                        updatedStudents[index].requirements[reqIndex].hard_copy_required = isChecked;
+                      }
+                      setStudents(updatedStudents);
+
+                        }}
+                      />
+                      Hard
+                    </label> */}
+                  </div>
+                )}
                 </div>
               ))}
             </div>
