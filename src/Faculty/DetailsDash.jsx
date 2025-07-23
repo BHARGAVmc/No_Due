@@ -289,6 +289,8 @@ const Approval = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [softRequired, setSoftRequired] = useState(false);
 const [hardRequired, setHardRequired] = useState(false);
+const [selectAllSubmitted, setSelectAllSubmitted] = useState({});
+
 
 
   useEffect(() => {
@@ -337,30 +339,6 @@ const [hardRequired, setHardRequired] = useState(false);
   const toggleRoll = (roll) => {
     setSelectedRoll(selectedRoll === roll ? null : roll);
   };
-
-  // const handleAddOther = async () => {
-  //   const trimmed = otherInput.trim();
-  //   if (!trimmed || dropdownItems.includes(trimmed)) return;
-
-  //   try {
-  //     await axios.post("http://127.0.0.1:8000/fdetails/add-requirement/", {
-  //       email,
-  //       branch: department,
-  //       year: years,
-  //       semester: "1",
-  //       section,
-  //       requirement_type: trimmed,
-  //       remarks: "Not Submitted"
-  //     });
-
-  //     setOtherInput("");
-  //     setShowDropdown(false);
-  //     window.location.reload();
-
-  //   } catch (error) {
-  //     console.error("Error adding requirement:", error);
-  //   }
-  // };
   const handleAddOther = async () => {
   const trimmed = otherInput.trim();
   if (!trimmed || dropdownItems.includes(trimmed)) return;
@@ -414,35 +392,194 @@ const [hardRequired, setHardRequired] = useState(false);
     alert("Failed to delete requirement.");
   }
 };
+const handleSave = async () => {
+  try {
+    const updates = [];
 
+    const updatedStudents = [...students];
 
-  const handleSave = async () => {
-    try {
-      const updates = [];
+    updatedStudents.forEach((student, studentIndex) => {
+      student.requirements.forEach((req, reqIndex) => {
+        let isCompleted = req.is_completed;
 
-      students.forEach((student) => {
-        student.requirements.forEach((req) => {
-          updates.push({
-            roll_no: student.roll,
-            subject_code: req.subject_code,
-            requirement_type: req.requirement_type,
-            is_completed: req.is_completed,
-            remarks: student.remarks
-          });
+        if (req.requirement_type.toLowerCase().includes("certificate")) {
+         const softRequired = req.soft_copy_required;
+        const hardRequired = req.hard_copy_required;
+        const softSubmitted = req.soft_copy_submitted;
+        const hardSubmitted = req.hard_copy_submitted;
+
+        if (softRequired && hardRequired) {
+          isCompleted = softSubmitted && hardSubmitted;
+        } else if (softRequired) {
+          isCompleted = softSubmitted;
+        } else if (hardRequired) {
+          isCompleted = hardSubmitted;
+        } else {
+          isCompleted = req.is_completed; 
+        }
+        updatedStudents[studentIndex].requirements[reqIndex].is_completed = isCompleted;
+       }
+        updates.push({
+          roll_no: student.roll,
+          subject_code: req.subject_code,
+          requirement_type: req.requirement_type,
+          is_completed: isCompleted,
+          remarks: student.remarks,
+          soft_copy_submitted: req.soft_copy_submitted || false,
+          hard_copy_submitted: req.hard_copy_submitted || false,
         });
       });
+    });
+    const response = await axios.post("http://127.0.0.1:8000/fdetails/update-requirements/", {
+      email,
+      updates,
+    });
 
-      await axios.post("http://127.0.0.1:8000/fdetails/update-requirements/", {
-        email,
-        updates
-      });
-
+    if (response.status === 200 || response.status === 201) {
+      setStudents(updatedStudents); 
       alert("Changes saved successfully!");
-    } catch (error) {
-      console.error("Error saving updates:", error);
+    } else {
       alert("Failed to save. Try again.");
     }
-  };
+  } catch (error) {
+    console.error("Error saving updates:", error);
+    alert("Failed to save. Try again.");
+  }
+};
+// const handleSelectAllToggle = (requirementName) => {
+//   const isCertificate = requirementName.toLowerCase().includes("certificate");
+
+//   const updatedStudents = students.map((student) => {
+//     const updatedRequirements = student.requirements.map((req) => {
+//       if (req.requirement_type === requirementName) {
+//         return {
+//           ...req,
+//           is_completed: true,
+//           ...(isCertificate && {
+//             soft_copy_submitted: true,
+//             hard_copy_submitted: true,
+//           }),
+//         };
+//       }
+//       return req;
+//     });
+
+//     return {
+//       ...student,
+//       requirements: updatedRequirements,
+//     };
+//   });
+
+//   setStudents(updatedStudents);
+
+//   updatedStudents.forEach((student) => {
+//     const selectedRequirement = student.requirements.find(
+//       (req) => req.requirement_type === requirementName
+//     );
+
+//     if (selectedRequirement) {
+//       const payload = {
+//         roll_no: student.roll,
+//         subject_code: selectedRequirement.subject_code,
+//         requirement_type: selectedRequirement.requirement_type,
+//         is_completed: true,
+//         ...(isCertificate && {
+//           soft_copy_submitted: true,
+//           hard_copy_submitted: true,
+//         }),
+//         remarks: student.remarks || "",
+//       };
+
+//       axios
+//         .post("http://127.0.0.1:8000/fdetails/update-requirements/", {
+//           email,
+//           updates: [payload],
+//         })
+//         .then(() => {
+//           console.log(`✅ Updated for ${student.roll}`);
+//         })
+//         .catch((error) => {
+//           console.error(`❌ Error updating for ${student.roll}:`, error);
+//         });
+//     }
+//   });
+
+//   // ✅ Update checkbox UI state
+//   setSelectAllSubmitted((prev) => ({
+//     ...prev,
+//     [requirementName]: !prev[requirementName],
+//   }));
+// };
+
+const handleSelectAllToggle = (requirementName) => {
+  const isCertificate = requirementName.toLowerCase().includes("certificate");
+  const isCurrentlySelected = !!selectAllSubmitted[requirementName];
+
+  const updatedStudents = students.map((student) => {
+    const updatedRequirements = student.requirements.map((req) => {
+      if (req.requirement_type === requirementName) {
+        return {
+          ...req,
+          is_completed: !isCurrentlySelected,
+          ...(isCertificate && {
+            soft_copy_submitted: !isCurrentlySelected,
+            hard_copy_submitted: !isCurrentlySelected,
+          }),
+        };
+      }
+      return req;
+    });
+
+    return {
+      ...student,
+      requirements: updatedRequirements,
+    };
+  });
+
+  setStudents(updatedStudents);
+
+  // Backend update: send toggled values
+  updatedStudents.forEach((student) => {
+    const selectedRequirement = student.requirements.find(
+      (req) => req.requirement_type === requirementName
+    );
+
+    if (selectedRequirement) {
+      const payload = {
+        roll_no: student.roll,
+        subject_code: selectedRequirement.subject_code,
+        requirement_type: selectedRequirement.requirement_type,
+        is_completed: !isCurrentlySelected,
+        ...(isCertificate && {
+          soft_copy_submitted: !isCurrentlySelected,
+          hard_copy_submitted: !isCurrentlySelected,
+        }),
+        remarks: student.remarks || "",
+      };
+
+      axios
+        .post("http://127.0.0.1:8000/fdetails/update-requirements/", {
+          email,
+          updates: [payload],
+        })
+        .then(() => {
+          console.log(`✅ Updated for ${student.roll}`);
+        })
+        .catch((error) => {
+          console.error(`❌ Error updating for ${student.roll}:`, error);
+        });
+    }
+  });
+
+  // Toggle checkbox state
+  setSelectAllSubmitted((prev) => ({
+    ...prev,
+    [requirementName]: !isCurrentlySelected,
+  }));
+};
+
+
+
 
   return (
     <div className="cont">
@@ -451,7 +588,7 @@ const [hardRequired, setHardRequired] = useState(false);
           className="back-button"
           onClick={() =>
             navigate("/FacultyDash", {
-              replace: true, // avoids stacking pages
+              replace: true, 
               state: {  email, password,department, years, section },
             })
           }
@@ -479,6 +616,16 @@ const [hardRequired, setHardRequired] = useState(false);
               <span className="delete-icon" onClick={() => handleDeleteItem(item)}>
                 ✖
               </span>
+              <div className="select-all-checkbox">
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={!!selectAllSubmitted[item]}
+                    onChange={() => handleSelectAllToggle(item)}
+                  />
+                  For All
+                </label>
+              </div>
             </div>
           ))}
 
@@ -520,114 +667,97 @@ const [hardRequired, setHardRequired] = useState(false);
           <div className="roll" onClick={() => toggleRoll(student.roll)}>
             <strong>{student.roll}</strong>
           </div>
-
           {selectedRoll === student.roll && (
             <div className="dbox">
               {dropdownItems.map((item, i) => (
                 <div key={i} className="requirement-item">
                   <label>
                     <input
-                      type="checkbox"
-                      checked={
-                        student.requirements?.find((r) => r.requirement_type === item)?.is_completed || false
-                      }
-                      onChange={(e) => {
-                        const updatedStudents = [...students];
-                        const reqIndex = updatedStudents[index].requirements.findIndex(
-                          (r) => r.requirement_type === item
-                        );
-                        if (reqIndex >= 0) {
-                          updatedStudents[index].requirements[reqIndex].is_completed = e.target.checked;
-                        }
-                        setStudents(updatedStudents);
-                      }}
-                    />
+                          type="checkbox"
+                          checked={
+                            student.requirements?.find((r) => r.requirement_type === item)?.is_completed || false
+                          }
+                          disabled={item.toLowerCase().includes("certificate")}
+                          onChange={(e) => {
+                            const updatedStudents = [...students];
+                            const reqIndex = updatedStudents[index].requirements.findIndex(
+                              (r) => r.requirement_type === item
+                            );
+                            // Only allow manual update if NOT a certificate
+                            if (reqIndex >= 0 && !item.toLowerCase().includes("certificate")) {
+                              updatedStudents[index].requirements[reqIndex].is_completed = e.target.checked;
+                            }
+                            setStudents(updatedStudents);
+                          }}
+                        />
                     {item}
                   </label>
                   {item.toLowerCase().includes("certificate") && (
-                  <div className="cert-options">
-                    <button
-                      className="certificate-button"
-                      onClick={() =>
-                        navigate("/CertificateView", {
-                          state: {
-                            roll_no: student.roll,
-                            subject_code: student.requirements.find(r => r.requirement_type === item)?.subject_code,
-                            requirement_type: item
-                          }
-                        })
-                      }
-                    >
-                      View
-                    </button>
+                <div className="cert-options">
+                  {(() => {
+                    const req = student.requirements.find(r => r.requirement_type === item);
 
-                    {/* Soft copy toggle */}
-                    {/* <label>
-                      <input
-                        type="checkbox"
-                        checked={
-                          student.requirements.find(r => r.requirement_type === item)?.soft_copy_required || false
-                        }
-                        onChange={async (e) => {
-                          const isChecked = e.target.checked;
-                          const subject_code = student.requirements.find(r => r.requirement_type === item)?.subject_code;
-                       await axios.post("http://127.0.0.1:8000/fdetails/update-certificate-type/", {
-                        email,
-                        subject_code,
-                        requirement_type: item,
-                        soft_copy_required: isChecked,
-                        hard_copy_required: student.requirements.find(r => r.requirement_type === item)?.hard_copy_required || false
-                      });
+                    return (
+                      <>
+                        {req?.soft_copy_required && (
+                            <label>
+                              <input
+                                type="checkbox"
+                                checked={req?.soft_copy_submitted || false}
+                                onChange={(e) => {
+                                  const updatedStudents = [...students];
+                                  const reqIndex = updatedStudents[index].requirements.findIndex(r => r.requirement_type === item);
+                                  if (reqIndex >= 0) {
+                                    updatedStudents[index].requirements[reqIndex].soft_copy_submitted = e.target.checked;
+                                  }
+                                  setStudents(updatedStudents);
+                                }}
+                              />
+                              Soft Copy Submitted
+                            </label>
+                          )}
 
-                      // ✅ Update state instead of reloading the entire page
-                      const updatedStudents = [...students];
-                      const reqIndex = updatedStudents[index].requirements.findIndex(r => r.requirement_type === item);
-                      if (reqIndex >= 0) {
-                        updatedStudents[index].requirements[reqIndex].soft_copy_required = isChecked;
-                      }
-                      setStudents(updatedStudents);
+                          {req?.soft_copy_required && req?.soft_copy_file && (
+                            <button
+                              className="view-button"
+                              onClick={() => navigate("/CertificateView", {
+                                state: {
+                                  roll_no: student.roll,
+                                  subject_code: req.subject_code,
+                                  requirement_type: req.requirement_type
+                                }
+                              })}
+                            >
+                              View
+                            </button>
+                          )}
 
-                        }}
-                      />
-                      Soft
-                    </label> */}
-
-                    {/* Hard copy toggle */}
-                    {/* <label>
-                      <input
-                        type="checkbox"
-                        checked={
-                          student.requirements.find(r => r.requirement_type === item)?.hard_copy_required || false
-                        }
-                        onChange={async (e) => {
-                          const isChecked = e.target.checked;
-                          const subject_code = student.requirements.find(r => r.requirement_type === item)?.subject_code;
-                      await axios.post("http://127.0.0.1:8000/fdetails/update-certificate-type/", {
-                        email,
-                        subject_code,
-                        requirement_type: item,
-                        soft_copy_required: student.requirements.find(r => r.requirement_type === item)?.soft_copy_required || false,
-                        hard_copy_required: isChecked
-                      });
-
-                      const updatedStudents = [...students];
-                      const reqIndex = updatedStudents[index].requirements.findIndex(r => r.requirement_type === item);
-                      if (reqIndex >= 0) {
-                        updatedStudents[index].requirements[reqIndex].hard_copy_required = isChecked;
-                      }
-                      setStudents(updatedStudents);
-
-                        }}
-                      />
-                      Hard
-                    </label> */}
-                  </div>
-                )}
+                          {req?.hard_copy_required && (
+                            <label>
+                              <input
+                                type="checkbox"
+                                checked={req?.hard_copy_submitted || false}
+                                onChange={(e) => {
+                                  const updatedStudents = [...students];
+                                  const reqIndex = updatedStudents[index].requirements.findIndex(r => r.requirement_type === item);
+                                  if (reqIndex >= 0) {
+                                    updatedStudents[index].requirements[reqIndex].hard_copy_submitted = e.target.checked;
+                                  }
+                                  setStudents(updatedStudents);
+                                }}
+                              />
+                              Hard Copy Submitted
+                            </label>
+                          )}
+                          </>
+                        );
+                      })()}
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
           )}
-
           <input
             type="text"
             placeholder="Remarks"

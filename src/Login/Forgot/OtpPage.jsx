@@ -1,109 +1,3 @@
-// // src/OtpPage.js
-// import React, { useState, useEffect } from "react";
-// import { useNavigate } from "react-router-dom";
-// import "./OtpPage.css";
-
-// const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-// const OtpPage = () => {
-//   const [inputEmail, setInputEmail] = useState("");
-//   const [otpSent, setOtpSent] = useState(false);
-//   const [otp, setOtp] = useState("");
-//   const [timer, setTimer] = useState(0);
-//   const navigate = useNavigate();
-
-//   const handleSendOtp = () => {
-//     if (!inputEmail) {
-//       alert("Please enter your email.");
-//       return;
-//     }
-
-//     if (!EMAIL_REGEX.test(inputEmail)) {
-//       alert("Please enter a valid email address.");
-//       return;
-//     }
-
-//     setOtpSent(true);
-//     setTimer(30);
-//     // console.log(OTP sent to ${inputEmail});
-//   };
-
-//   const handleVerifyOtp = () => {
-//     if (otp === "123456") {
-//       alert("OTP Verified Successfully!");
-//       navigate("/ResetPassword", { state: { email: inputEmail } });
-//     } else {
-//       alert("Invalid OTP!");
-//     }
-//   };
-
-//   const handleResend = () => {
-//     setTimer(30);
-//     // console.log(Resending OTP to ${inputEmail});
-//   };
-
-//   useEffect(() => {
-//     if (timer === 0) return;
-//     const countdown = setInterval(() => setTimer((prev) => prev - 1), 1000);
-//     return () => clearInterval(countdown);
-//   }, [timer]);
-
-//   return (
-//     <div className="otp-container">
-//       <h2>Secure OTP Login</h2>
-
-//       <div className="form-group">
-//         <label>Email ID</label>
-//         <input
-//         className="ip1"
-//           type="email"
-//           placeholder="Enter your email..."
-//           value={inputEmail}
-//           onChange={(e) => setInputEmail(e.target.value)}
-//         />
-//       </div>
-
-//       {!otpSent ? (
-//         <button className="btn-primary" onClick={handleSendOtp}>
-//           Send OTP
-//         </button>
-//       ) : (
-//         <>
-//           <div className="form-group">
-//             <label>Enter OTP</label>
-//             <input
-//             className="ip1"
-//               type="text"
-//               placeholder="6-digit OTP"
-//               maxLength={6}
-//               value={otp}
-//               onChange={(e) => setOtp(e.target.value)}
-//             />
-//           </div>
-
-//           <button className="btn-primary" onClick={handleVerifyOtp}>
-//             Verify OTP
-//           </button>
-
-//           <div className="resend-text">
-//             {timer > 0 ? (
-//               <p>
-//                 Resend OTP in <strong>{timer}s</strong>
-//               </p>
-//             ) : (
-//               <button className="btn-link" onClick={handleResend}>
-//                 Resend OTP
-//               </button>
-//             )}
-//           </div>
-//         </>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default OtpPage;
-
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -118,7 +12,8 @@ const OtpPage = () => {
   const [otp, setOtp] = useState("");
   const [timer, setTimer] = useState(0);
   const [otpError, setOtpError] = useState("");
-  const [buttonDisabled, setButtonDisabled] = useState(false); // disable state
+  const [sendDisabled, setSendDisabled] = useState(false);      // for send/resend
+  const [verifyDisabled, setVerifyDisabled] = useState(false);  // for verify
   const navigate = useNavigate();
 
   const handleSendOtp = async () => {
@@ -127,7 +22,7 @@ const OtpPage = () => {
       return;
     }
 
-    setButtonDisabled(true);
+    setSendDisabled(true); // disable button for 30s
 
     try {
       const res = await axios.post("http://127.0.0.1:8000/forgot/send-otp/", {
@@ -141,16 +36,17 @@ const OtpPage = () => {
         alert("OTP sent to your email.");
       } else {
         alert("Failed to send OTP.");
-        setButtonDisabled(false);
+        setSendDisabled(false);
       }
     } catch (err) {
       alert("Failed to send OTP. Please check email or server.");
-      setButtonDisabled(false);
+      setSendDisabled(false);
     }
   };
 
   const handleVerifyOtp = async () => {
-    setButtonDisabled(true);
+    setVerifyDisabled(true);
+
     try {
       const res = await axios.post("http://127.0.0.1:8000/forgot/verify-otp/", {
         email: inputEmail,
@@ -162,23 +58,22 @@ const OtpPage = () => {
         navigate("/ResetPassword", { state: { email: inputEmail } });
       } else {
         setOtpError("Invalid OTP");
-        setButtonDisabled(false); // Re-enable if invalid
       }
     } catch (err) {
       setOtpError("Invalid OTP or server error.");
-      setButtonDisabled(false); // Re-enable if error
     }
+
+    setVerifyDisabled(false);
   };
 
   const handleResend = async () => {
-    setButtonDisabled(true);
-    await handleSendOtp(); // Reuses logic
+    setSendDisabled(true);
+    await handleSendOtp();
   };
 
-  // Countdown effect for resend OTP
   useEffect(() => {
     if (timer === 0) {
-      setButtonDisabled(false); // Re-enable when timer ends
+      setSendDisabled(false);
       return;
     }
     const countdown = setInterval(() => setTimer((prev) => prev - 1), 1000);
@@ -187,8 +82,7 @@ const OtpPage = () => {
 
   return (
     <div className="otp-container">
-      {/* Back Icon */}
-      <div className="back-button" onClick={() => navigate("/Login")}>
+      <div className="back-button-otp" onClick={() => navigate("/Login")}>
         <FaArrowLeft /> <span>Back</span>
       </div>
 
@@ -204,7 +98,7 @@ const OtpPage = () => {
           onChange={(e) => {
             setInputEmail(e.target.value);
             if (!EMAIL_REGEX.test(e.target.value)) {
-              setButtonDisabled(false); // Enable button on invalid email change
+              setSendDisabled(false);
             }
           }}
         />
@@ -214,9 +108,9 @@ const OtpPage = () => {
         <button
           className="btn-primary"
           onClick={handleSendOtp}
-          disabled={buttonDisabled}
+          disabled={sendDisabled}
         >
-          {buttonDisabled ? "Please wait..." : "Send OTP"}
+          {sendDisabled ? "Please wait..." : "Send OTP"}
         </button>
       ) : (
         <>
@@ -236,9 +130,9 @@ const OtpPage = () => {
           <button
             className="btn-primary"
             onClick={handleVerifyOtp}
-            disabled={buttonDisabled}
+            disabled={verifyDisabled}
           >
-            {buttonDisabled ? "Verifying..." : "Verify OTP"}
+            {verifyDisabled ? "Verifying..." : "Verify OTP"}
           </button>
 
           <div className="resend-text">
@@ -250,9 +144,9 @@ const OtpPage = () => {
               <button
                 className="btn-link"
                 onClick={handleResend}
-                disabled={buttonDisabled}
+                disabled={sendDisabled}
               >
-                {buttonDisabled ? "Please wait..." : "Resend OTP"}
+                {sendDisabled ? "Please wait..." : "Resend OTP"}
               </button>
             )}
           </div>

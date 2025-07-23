@@ -51,12 +51,16 @@ const BranchForm = () => {
       const response = await axios.post('http://localhost:8000/f_input/save-faculty-subject/', payload);
 
       if (response.status === 200) {
-        alert("✅ Successfully submitted");
-        window.location.href = '/FacultyDash';
+        alert(" Successfully submitted");
+        // window.location.href = '/FacultyDash';
+         navigate("/FacultyDash", {
+              replace: true, // avoids stacking pages
+              state: {  email, password},
+            })
       }
     } catch (error) {
       console.error(error);
-      alert("❌ Submission failed: " + (error.response?.data?.error || "Unknown error"));
+      alert(" Submission failed: " + (error.response?.data?.error || "Unknown error"));
     }
   };
 

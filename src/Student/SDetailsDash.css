@@ -253,3 +253,31 @@ body {
   opacity: 0.4;
   cursor: not-allowed;
 }
+.sdetails-remark-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center horizontally */
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.sdetails-remark-toggle {
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  background-color: #383b3f;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+.sdetails-remark-popup {
+  background-color: #f8f9fa;
+  padding: 12px 20px;
+  border-radius: 8px;
+  max-width: 90%;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}

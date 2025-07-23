@@ -41,7 +41,7 @@ const StudentDetailsForm = () => {
 
       if (response.status === 200 || response.status === 201) {
         alert("Student profile updated successfully");
-        navigate("/SubjectDash");
+        navigate("/SubjectDash", { state: { email, password } });
       } else {
         alert("Something went wrong");
       }

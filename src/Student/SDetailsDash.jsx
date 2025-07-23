@@ -4,7 +4,7 @@ import './SDetailsDash.css';
 import { Trash2 } from 'lucide-react';
 
 const Item = ({ title, checked, onChange, status, onClickTitle, softCopyRequired, hardCopyRequired }) => {
-  const [showRemark, setShowRemark] = useState(false);
+  
 
   return (
     <div className="sdetails-item">
@@ -17,13 +17,6 @@ const Item = ({ title, checked, onChange, status, onClickTitle, softCopyRequired
           {softCopyRequired && <span className="dot green" title="Soft Copy required" />}
           {hardCopyRequired && <span className="dot red" title="Hard Copy required" />}
         </div>
-
-        {status && (
-          <span className="sdetails-status remark-link" onClick={() => setShowRemark(!showRemark)}>
-            remark
-          </span>
-        )}
-        {showRemark && <div className="sdetails-remark-popup">{status}</div>}
       </div>
 
       <div
@@ -111,7 +104,7 @@ function App() {
   const subject = location.state?.subject;
   console.log("📥 Subject from previous page:", subject);
 
-
+  const [showRemark, setShowRemark] = useState(false);
   const [checkedItems, setCheckedItems] = useState({});
   const [uploadedFile, setUploadedFile] = useState(null);
   const [selectedRequirementWithUpload, setSelectedRequirementWithUpload] = useState(null);
@@ -233,7 +226,6 @@ console.log("DEBUG ❗subject.faculty_email:", subject.faculty_email);
           </svg>
         </div>
       </div>
-
       {subject.requirements.map((req) => (
         <Item
           key={req.requirement_type}
@@ -247,23 +239,52 @@ console.log("DEBUG ❗subject.faculty_email:", subject.faculty_email);
         />
       ))}
 
-      {selectedRequirementWithUpload && selectedReqData && (
-        <div className="sdetails-sub-items">
-          {['Hard Copy', 'Soft Copy'].map((title) => (
-          <SubItem
-            key={title}
-            title={title}
-            checked={checkedItems[title]}
-            onChange={title === 'Soft Copy' ? setUploadedFile : () => handleCheck(title)}
-            onUpload={title === 'Soft Copy' ? handleUpload : () => {}}
-            onDelete={title === 'Soft Copy' ? handleDeleteUpload : () => {}}
-            uploadedFile={title === 'Soft Copy' ? uploadedFile : null}
-            softCopyRequired={selectedReqData.soft_copy_required}
-            hardCopyRequired={selectedReqData.hard_copy_required}
-          />
-          ))}
-        </div>
-      )}
+      {selectedRequirementWithUpload &&
+          selectedReqData &&
+          selectedRequirementWithUpload.toLowerCase().includes("certificate") && (
+            <div className="sdetails-sub-items">
+              {['Hard Copy', 'Soft Copy'].map((title) => {
+                const isRequired =
+                  title === 'Soft Copy'
+                    ? selectedReqData.soft_copy_required
+                    : selectedReqData.hard_copy_required;
+
+                if (!isRequired) return null;
+
+                return (
+                  <SubItem
+                    key={title}
+                    title={title}
+                    checked={title === 'Soft Copy'
+                      ? selectedReqData.soft_copy_completed
+                      : selectedReqData.hard_copy_completed}
+                    onChange={title === 'Soft Copy' ? setUploadedFile : () => handleCheck(title)}
+                    onUpload={title === 'Soft Copy' ? handleUpload : () => {}}
+                    onDelete={title === 'Soft Copy' ? handleDeleteUpload : () => {}}
+                    uploadedFile={title === 'Soft Copy' ? uploadedFile : null}
+                    softCopyRequired={selectedReqData.soft_copy_required}
+                    hardCopyRequired={selectedReqData.hard_copy_required}
+                  />
+                );
+              })}
+            </div>
+        )}
+        {subject.requirements?.[0]?.remarks && (
+            <div className="sdetails-remark-footer">
+              <button
+                className="sdetails-remark-toggle"
+                onClick={() => setShowRemark(!showRemark)}
+              >
+                {showRemark ? 'Hide Remark' : 'Show Remark'}
+              </button>
+
+              {showRemark && (
+                <div className="sdetails-remark-popup">
+                  {subject.requirements[0].remarks}
+                </div>
+              )}
+            </div>
+          )}
     </div>
   );
 }
